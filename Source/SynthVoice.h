@@ -27,11 +27,13 @@ public:
     }
     //==========================================
     
-    void getParam (float* attack, float* release)
+    void getParam (float* ATTACK_ID, float* RELEASE_ID, float* HARMDIAL_ID)
     {
         // get parameter from the slider and pass to the attack variable:
-        env1.setAttack(double(*attack)); //cast as a float since envelope attack takes a double. or could just have it as a double in the plugineditor H
-        env1.setRelease(double(*release));
+        env1.setAttack(double(*ATTACK_ID)); //cast as a float since envelope attack takes a double. or could just have it as a double in the plugineditor H
+        env1.setRelease(double(*RELEASE_ID));
+        harmRatio = (int(*HARMDIAL_ID));
+        
     }
     
     //==========================================
@@ -97,28 +99,35 @@ public:
         env1.setDecay(500);
         env1.setSustain(0.8);
         
-        harmRatio = 32;
+        
+        //mod1freq = 24;
+        mod1amp = 19;
+        mod1freq = 2;
+        //modIndex;
+        //mod0amp = mod0
+        //harmRatio = 4;
         
         for (int sample = 0; sample < numSamples; ++sample)
         {
             
-            mod0freq = carrierFreq * harmRatio;
+            mod0freq = harmRatio * carrierFreq;
+            modIndex = mod1freq * mod1amp;
+            mod0amp = mod0freq * modIndex;
             
             double theWave = carrier.sinewave(carrierFreq
-                                              + ((modulator0.sinewave(mod0freq))))
-                                              * (mod0freq
-                                                * ((modulator1.phasor(mod1freq)
-                                                    * mod1amp)));
+                                              + (modulator0.sinewave(mod0freq)
+                                                 * mod0amp));
                                               
             
             
-            double theSound = env1.adsr(theWave, env1.trigger) * level;
+            double theSound = (env1.adsr(theWave, env1.trigger) * level);
+            
             //double filteredSound = filter1.lores(theSound, 200, 0.1);
             
             // Iterate the channels
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
             {
-                outputBuffer.addSample(channel, startSample, theSound); //args: (destChannel, destSample, valueToAdd)
+                outputBuffer.addSample(channel, startSample, (theSound * 0.1)); //args: (destChannel, destSample, valueToAdd)
             }
             // Advance startSample after channel iterator:
             ++startSample;
@@ -135,10 +144,11 @@ private:
     double level;
     double carrierFreq;
     double mod0freq;
-    double mod1freq = 0.04;
-    double mod1amp = 200;
-    
-    double harmRatio;
+    double mod0amp;
+    double modIndex;
+    double mod1amp;
+    double mod1freq;
+    int harmRatio;
     
     //Create an oscillator:
     maxiOsc carrier, modulator0, modulator1;

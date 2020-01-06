@@ -63,7 +63,7 @@ AudioProcessorValueTreeState::ParameterLayout JuceSynthFrameworkAudioProcessor::
     
     auto releaseParam = std::make_unique<AudioParameterFloat> (RELEASE_ID, RELEASE_NAME, 0.1f, 5000.0f, 120.0f);
     
-    auto dialParam = std::make_unique<AudioParameterFloat> (HARMDIAL_ID, HARMDIAL_NAME, 0.1f, 5000.0f, 200.0f);
+    auto dialParam = std::make_unique<AudioParameterInt>(HARMDIAL_ID, HARMDIAL_NAME, 0, 10, 0);
     
     auto onOffParam = std::make_unique<AudioParameterBool>
     (ONOFF_ID, ONOFF_NAME, false);
@@ -207,13 +207,16 @@ void JuceSynthFrameworkAudioProcessor::processBlock (AudioBuffer<float>& buffer,
     
     // Iterate over the synth voices:
     
+    
+    
     for (int i=0; i < mySynth.getNumVoices(); i++)
     {
         // If the voice is dynamically cast as a synth voice, relay the information:
         if (myVoice = dynamic_cast<SynthVoice*>(mySynth.getVoice(i)))
         {
-            myVoice->getParam(treeState.getRawParameterValue(ATTACK_ID),
-                              treeState.getRawParameterValue(RELEASE_ID));
+            myVoice->getParam (treeState.getRawParameterValue (ATTACK_ID),
+                               treeState.getRawParameterValue (RELEASE_ID),
+                               treeState.getRawParameterValue(HARMDIAL_ID));
             
             
         }
