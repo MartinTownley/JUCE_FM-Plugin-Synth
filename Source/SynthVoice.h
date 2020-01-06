@@ -96,12 +96,20 @@ public:
         //env1.setAttack(2000);
         env1.setDecay(500);
         env1.setSustain(0.8);
-        //env1.setRelease(2000);
+        
+        harmRatio = 32;
         
         for (int sample = 0; sample < numSamples; ++sample)
         {
             
-            double theWave = carrier.sinewave(carrierFreq);
+            mod0freq = carrierFreq * harmRatio;
+            
+            double theWave = carrier.sinewave(carrierFreq
+                                              + ((modulator0.sinewave(mod0freq))))
+                                              * (mod0freq
+                                                * ((modulator1.phasor(mod1freq)
+                                                    * mod1amp)));
+                                              
             
             
             double theSound = env1.adsr(theWave, env1.trigger) * level;
@@ -126,11 +134,15 @@ public:
 private:
     double level;
     double carrierFreq;
+    double mod0freq;
+    double mod1freq = 0.04;
+    double mod1amp = 200;
     
     double harmRatio;
     
     //Create an oscillator:
-    maxiOsc carrier;
+    maxiOsc carrier, modulator0, modulator1;
+    
     
     
     maxiEnv env1;
