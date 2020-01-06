@@ -20,8 +20,8 @@
  #define RELEASE_ID "release"
 #define RELEASE_NAME "Release"
 
-#define DIAL_ID "dial"
-#define DIAL_NAME "Dial"
+#define HARMDIAL_ID "harmDial"
+#define HARMDIAL_NAME "HarmDial"
 
 #define ONOFF_ID "onoff"
 #define ONOFF_NAME "Onoff"

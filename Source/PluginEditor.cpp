@@ -17,45 +17,67 @@ JuceSynthFrameworkAudioProcessorEditor::JuceSynthFrameworkAudioProcessorEditor (
 {
     setSize(1000,300);
     
-    // textbutton Bool
+     //textbutton Bool
     onOff.setColour (TextButton::buttonColourId, Colours::purple);
     onOff.setColour (TextButton::buttonOnColourId, Colours::yellow);
     onOff.setClickingTogglesState (true);
     onOff.onClick = [this] () {};
     addAndMakeVisible(onOff);
-    
+
     //attack slider
     attackSlider.setSliderStyle (Slider::SliderStyle::LinearVertical);
     attackSlider.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
+
     addAndMakeVisible(&attackSlider);
-    attackAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, ATTACK_ID, attackSlider);
     
+
+    attackAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, ATTACK_ID, attackSlider);
+
     //release slider
     releaseSlider.setSliderStyle (Slider::SliderStyle::LinearVertical);
     releaseSlider.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
     addAndMakeVisible(&releaseSlider);
     releaseAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, RELEASE_ID, releaseSlider);
+
     
-    //Choice
-    choiceBox.addItem ("Choice1", 1);
-    choiceBox.addItem ("Choice2", 2);
-    choiceBox.addItem ("Choice3", 3);
-    choiceBox.addItem ("Choice4", 4);
-    addAndMakeVisible(choiceBox);
+    //harmdial slider
+    harmDial.setSliderStyle (Slider::SliderStyle::RotaryVerticalDrag);
+    harmDial.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
+    addAndMakeVisible(&harmDial);
+    harmDialAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, HARMDIAL_ID, harmDial);
     
-    //dial slider
-    dial.setSliderStyle (Slider::SliderStyle::RotaryVerticalDrag);
-    dial.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
-    addAndMakeVisible(&dial);
+    //labels:
+    //attack:
+    addAndMakeVisible (&allLabels[0]);
+    allLabels[0].setText("Attack", dontSendNotification);
+    
+    allLabels[0].attachToComponent(&attackSlider, false);
+    
+    //release:
+    addAndMakeVisible (&allLabels[1]);
+    allLabels[1].setText("Release", dontSendNotification);
+    allLabels[1].attachToComponent (&releaseSlider, false);
+    
+    //harmRatio:
+    addAndMakeVisible (&allLabels[2]);
+    allLabels[2].setText("Harm", dontSendNotification);
+    allLabels[2].attachToComponent (&harmDial, false);
+    
     
     //otherLookAndFeel.setColour(Slider::thumbColourId, Colours::purple);
     //attackSlider.setLookAndFeel(&otherLookAndFeel);
+   
     
-    
+   
     //otherLookAndFeel.createSliderTextBox(dial);
     
-    
-    
+    //Choice
+    //    choiceBox.addItem ("Choice1", 1);
+    //    choiceBox.addItem ("Choice2", 2);
+    //    choiceBox.addItem ("Choice3", 3);
+    //    choiceBox.addItem ("Choice4", 4);
+    //    addAndMakeVisible(choiceBox);
+   
     
     
     
@@ -92,10 +114,10 @@ void JuceSynthFrameworkAudioProcessorEditor::resized()
     releaseSlider.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
     
     //choiceBox
-    choiceBox.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
+//    choiceBox.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
     
     // dial
-    dial.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
+    harmDial.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
     
     
     

@@ -36,13 +36,23 @@ private:
     
     
     // Could make a vector of sliders..
-    Label allLabels[5];
+    //Label allLabels[5];
+    
+    //std::vector<Slider> allSliders;
+    
+    
+    //int numADSR{ static_cast<int>(std::size(ADSR))};
+    //Label ADSRLabels[2];
+    
+    
+    
     
     Slider attackSlider;
+    Label allLabels[5];
     
     Slider releaseSlider;
     
-    Slider dial;
+    Slider harmDial;
     
     TextButton onOff;
     
@@ -64,7 +74,7 @@ public:
     
     
     // dialAttach
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> dialAttach;
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> harmDialAttach;
     
     // onoffAttach
     std::unique_ptr <AudioProcessorValueTreeState::ButtonAttachment> onOffAttach;

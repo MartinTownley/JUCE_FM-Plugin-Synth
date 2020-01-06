@@ -63,7 +63,7 @@ AudioProcessorValueTreeState::ParameterLayout JuceSynthFrameworkAudioProcessor::
     
     auto releaseParam = std::make_unique<AudioParameterFloat> (RELEASE_ID, RELEASE_NAME, 0.1f, 5000.0f, 120.0f);
     
-    auto dialParam = std::make_unique<AudioParameterFloat> (DIAL_ID, DIAL_NAME, 0.1f, 5000.0f, 200.0f);
+    auto dialParam = std::make_unique<AudioParameterFloat> (HARMDIAL_ID, HARMDIAL_NAME, 0.1f, 5000.0f, 200.0f);
     
     auto onOffParam = std::make_unique<AudioParameterBool>
     (ONOFF_ID, ONOFF_NAME, false);
