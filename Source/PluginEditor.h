@@ -54,6 +54,8 @@ private:
     
     Slider harmDial;
     
+    Slider modIndexDial;
+    
     TextButton onOff;
     
     ComboBox choiceBox;
@@ -73,8 +75,10 @@ public:
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> releaseAttach;
     
     
-    // dialAttach
+    // harmdialAttach
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> harmDialAttach;
+    
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> modIndexDialAttach;
     
     // onoffAttach
     std::unique_ptr <AudioProcessorValueTreeState::ButtonAttachment> onOffAttach;

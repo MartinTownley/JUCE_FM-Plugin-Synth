@@ -27,12 +27,19 @@ public:
     }
     //==========================================
     
-    void getParam (float* ATTACK_ID, float* RELEASE_ID, float* HARMDIAL_ID)
+    void getParam (float* ATTACK_ID, float* RELEASE_ID, float* HARMDIAL_ID, float* MODINDEX_ID)
     {
         // get parameter from the slider and pass to the attack variable:
-        env1.setAttack(double(*ATTACK_ID)); //cast as a float since envelope attack takes a double. or could just have it as a double in the plugineditor H
-        env1.setRelease(double(*RELEASE_ID));
+        env1.setAttack(int(*ATTACK_ID)); //cast as a float since envelope attack takes a double. or could just have it as a double in the plugineditor H
+        env1.setRelease(int(*RELEASE_ID));
+        
+        // Harmonicity Radio
         harmRatio = (int(*HARMDIAL_ID));
+        
+        // Modulation Index
+        modIndex = (double(*MODINDEX_ID));
+        
+        
         
     }
     
@@ -100,18 +107,16 @@ public:
         env1.setSustain(0.8);
         
         
-        //mod1freq = 24;
+        
         mod1amp = 19;
         mod1freq = 2;
-        //modIndex;
-        //mod0amp = mod0
-        //harmRatio = 4;
+        
         
         for (int sample = 0; sample < numSamples; ++sample)
         {
             
             mod0freq = harmRatio * carrierFreq;
-            modIndex = mod1freq * mod1amp;
+            //modIndex = mod1freq * mod1amp;
             mod0amp = mod0freq * modIndex;
             
             double theWave = carrier.sinewave(carrierFreq

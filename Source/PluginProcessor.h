@@ -23,6 +23,9 @@
 #define HARMDIAL_ID "harmDial"
 #define HARMDIAL_NAME "HarmDial"
 
+#define MODINDEXDIAL_ID "modIndex"
+#define MODINDEXDIAL_NAME "ModIndex"
+
 #define ONOFF_ID "onoff"
 #define ONOFF_NAME "Onoff"
 

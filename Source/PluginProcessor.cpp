@@ -59,11 +59,15 @@ AudioProcessorValueTreeState::ParameterLayout JuceSynthFrameworkAudioProcessor::
     
     //create variable that will go inside the treeState argument:
     //auto deduces return type for us:
-    auto attackParam = std::make_unique<AudioParameterFloat> (ATTACK_ID, ATTACK_NAME, 0.1f, 5000.0f, 11.0f);
+    auto attackParam = std::make_unique<AudioParameterInt> (ATTACK_ID, ATTACK_NAME, 10, 5000, 10);
     
-    auto releaseParam = std::make_unique<AudioParameterFloat> (RELEASE_ID, RELEASE_NAME, 0.1f, 5000.0f, 120.0f);
+    auto releaseParam = std::make_unique<AudioParameterInt> (RELEASE_ID, RELEASE_NAME, 10, 5000, 10);
     
-    auto dialParam = std::make_unique<AudioParameterInt>(HARMDIAL_ID, HARMDIAL_NAME, 0, 10, 0);
+    auto harmDialParam = std::make_unique<AudioParameterInt>(HARMDIAL_ID, HARMDIAL_NAME, 1, 128, 1);
+    
+    auto modIndexParam = std::make_unique<AudioParameterFloat>(MODINDEXDIAL_ID, MODINDEXDIAL_NAME, 1.0f, 200.0f, 1.0f);
+    
+    
     
     auto onOffParam = std::make_unique<AudioParameterBool>
     (ONOFF_ID, ONOFF_NAME, false);
@@ -78,7 +82,10 @@ AudioProcessorValueTreeState::ParameterLayout JuceSynthFrameworkAudioProcessor::
     
     params.push_back (std::move(attackParam));
     params.push_back (std::move(releaseParam));
-    params.push_back (std::move(dialParam));
+    params.push_back (std::move(harmDialParam));
+    params.push_back (std::move(modIndexParam));
+
+    
     params.push_back (std::move(onOffParam));
     params.push_back (std::move(choiceParam));
     
@@ -216,7 +223,8 @@ void JuceSynthFrameworkAudioProcessor::processBlock (AudioBuffer<float>& buffer,
         {
             myVoice->getParam (treeState.getRawParameterValue (ATTACK_ID),
                                treeState.getRawParameterValue (RELEASE_ID),
-                               treeState.getRawParameterValue(HARMDIAL_ID));
+                               treeState.getRawParameterValue(HARMDIAL_ID),
+                               treeState.getRawParameterValue(MODINDEXDIAL_ID));
             
             
         }

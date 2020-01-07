@@ -46,6 +46,12 @@ JuceSynthFrameworkAudioProcessorEditor::JuceSynthFrameworkAudioProcessorEditor (
     addAndMakeVisible(&harmDial);
     harmDialAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, HARMDIAL_ID, harmDial);
     
+    //modIndexDial slider
+    modIndexDial.setSliderStyle (Slider::SliderStyle::RotaryVerticalDrag);
+    modIndexDial.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
+    addAndMakeVisible(&modIndexDial);
+    modIndexDialAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, MODINDEXDIAL_ID, modIndexDial);
+    
     //labels:
     //attack:
     addAndMakeVisible (&allLabels[0]);
@@ -63,7 +69,10 @@ JuceSynthFrameworkAudioProcessorEditor::JuceSynthFrameworkAudioProcessorEditor (
     allLabels[2].setText("Harm", dontSendNotification);
     allLabels[2].attachToComponent (&harmDial, false);
     
-    
+    //harmRatio:
+    addAndMakeVisible (&allLabels[3]);
+    allLabels[3].setText("ModIndex", dontSendNotification);
+    allLabels[3].attachToComponent (&modIndexDial, false);
     //otherLookAndFeel.setColour(Slider::thumbColourId, Colours::purple);
     //attackSlider.setLookAndFeel(&otherLookAndFeel);
    
@@ -119,6 +128,8 @@ void JuceSynthFrameworkAudioProcessorEditor::resized()
     // dial
     harmDial.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
     
+    // dial
+    modIndexDial.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
     
     
     
