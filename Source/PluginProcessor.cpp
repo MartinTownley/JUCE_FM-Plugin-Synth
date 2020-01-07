@@ -33,7 +33,7 @@ treeState(*this, nullptr, "PARAMETERS", createParameterLayout())
     // Clear voices, get rid of garbage:
     mySynth.clearVoices();
     
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 10; i++)
     {
         mySynth.addVoice (new SynthVoice());
     }
@@ -72,7 +72,8 @@ AudioProcessorValueTreeState::ParameterLayout JuceSynthFrameworkAudioProcessor::
     auto onOffParam = std::make_unique<AudioParameterBool>
     (ONOFF_ID, ONOFF_NAME, false);
     
-    auto choiceParam = std::make_unique <AudioParameterChoice>(CHOICE_ID, CHOICE_NAME, StringArray ("Choice1", "Choice2", "Choice3"), 0);
+    auto choiceParam = std::make_unique <AudioParameterChoice>(MODCHOICE_ID, MODCHOICE_NAME, StringArray ("OFF", "SINE", "TRI", "PHASOR", "SQUARE"), 0);
+    
     
     
     
@@ -226,7 +227,8 @@ void JuceSynthFrameworkAudioProcessor::processBlock (AudioBuffer<float>& buffer,
                                treeState.getRawParameterValue(HARMDIAL_ID),
                                treeState.getRawParameterValue(MODINDEXDIAL_ID),
                                
-                                    treeState.getRawParameterValue(ONOFF_ID));
+                                    treeState.getRawParameterValue(ONOFF_ID),
+                                    treeState.getRawParameterValue(MODCHOICE_ID));
             
             
         }

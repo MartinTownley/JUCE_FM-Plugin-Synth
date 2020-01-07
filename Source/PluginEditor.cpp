@@ -17,6 +17,11 @@ JuceSynthFrameworkAudioProcessorEditor::JuceSynthFrameworkAudioProcessorEditor (
 {
     setSize(1000,300);
     
+    
+    addAndMakeVisible(&oscGUI);
+    
+    
+    
      //textbutton Bool
     onOff.setColour (TextButton::buttonColourId, Colours::purple);
     onOff.setColour (TextButton::buttonOnColourId, Colours::yellow);
@@ -29,10 +34,7 @@ JuceSynthFrameworkAudioProcessorEditor::JuceSynthFrameworkAudioProcessorEditor (
     //attack slider
     attackSlider.setSliderStyle (Slider::SliderStyle::LinearVertical);
     attackSlider.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
-
     addAndMakeVisible(&attackSlider);
-    
-
     attackAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, ATTACK_ID, attackSlider);
 
     //release slider
@@ -54,6 +56,17 @@ JuceSynthFrameworkAudioProcessorEditor::JuceSynthFrameworkAudioProcessorEditor (
     addAndMakeVisible(&modIndexDial);
     modIndexDialAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, MODINDEXDIAL_ID, modIndexDial);
     
+//    //Choice
+//    modChoice.addItem ("OFF", 1);
+//    modChoice.addItem ("SINE", 2);
+//    modChoice.addItem ("TRI", 3);
+//    modChoice.addItem ("SAW", 4);
+//    modChoice.addItem ("SQUARE", 5);
+//    addAndMakeVisible(modChoice);
+//    modChoiceAttach = std::make_unique <AudioProcessorValueTreeState::ComboBoxAttachment> (processor.treeState, MODCHOICE_ID, modChoice);
+    
+    
+    
     //labels:
     //attack:
     addAndMakeVisible (&allLabels[0]);
@@ -71,7 +84,7 @@ JuceSynthFrameworkAudioProcessorEditor::JuceSynthFrameworkAudioProcessorEditor (
     allLabels[2].setText("Harmonicity", dontSendNotification);
     allLabels[2].attachToComponent (&harmDial, false);
     
-    //harmRatio:
+    //mod index:
     addAndMakeVisible (&allLabels[3]);
     allLabels[3].setText("Mod Index", dontSendNotification);
     allLabels[3].attachToComponent (&modIndexDial, false);
@@ -79,15 +92,13 @@ JuceSynthFrameworkAudioProcessorEditor::JuceSynthFrameworkAudioProcessorEditor (
     //attackSlider.setLookAndFeel(&otherLookAndFeel);
    
     
+    
+    
+    // Mod index
    
     //otherLookAndFeel.createSliderTextBox(dial);
     
-    //Choice
-    //    choiceBox.addItem ("Choice1", 1);
-    //    choiceBox.addItem ("Choice2", 2);
-    //    choiceBox.addItem ("Choice3", 3);
-    //    choiceBox.addItem ("Choice4", 4);
-    //    addAndMakeVisible(choiceBox);
+    
    
     
     
@@ -116,7 +127,7 @@ void JuceSynthFrameworkAudioProcessorEditor::resized()
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
    
-    onOff.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
+    
     
     //attackSlider
     attackSlider.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
@@ -132,6 +143,24 @@ void JuceSynthFrameworkAudioProcessorEditor::resized()
     
     // dial
     modIndexDial.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
+    
+    
+    //modChoice.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize / 3));
+    
+    Rectangle<int> area = getLocalBounds(); //this is the dimensions of the whole UI
+    
+    const int componentWidth = 200;
+    const int componentHeight = 200;
+    
+    //oscGUI.setBounds(area.removeFromLeft(componentWidth).removeFromTop(componentHeight));
+    
+    
+    oscGUI.setBounds(bounds.removeFromLeft(100).withSizeKeepingCentre(componentHeight, componentWidth));
+    
+    
+    
+    
+    //onOff.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
     
     
     

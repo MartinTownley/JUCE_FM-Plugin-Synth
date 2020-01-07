@@ -29,8 +29,8 @@
 #define ONOFF_ID "onOff"
 #define ONOFF_NAME "OnOff"
 
-#define CHOICE_ID "choice"
-#define CHOICE_NAME "Choice"
+#define MODCHOICE_ID "modChoice"
+#define MODCHOICE_NAME "ModChoice"
 
 
 

@@ -27,7 +27,7 @@ public:
     }
     //==========================================
     
-    void getParam (float* ATTACK_ID, float* RELEASE_ID, float* HARMDIAL_ID, float* MODINDEX_ID, float* ONOFF_ID)
+    void getParam (float* ATTACK_ID, float* RELEASE_ID, float* HARMDIAL_ID, float* MODINDEX_ID, float* ONOFF_ID, float* MODCHOICE_ID)
     {
         // get parameter from the slider and pass to the attack variable:
         env1.setAttack(int(*ATTACK_ID)); //cast as a float since envelope attack takes a double. or could just have it as a double in the plugineditor H
@@ -42,7 +42,7 @@ public:
         //boolean for modulator
         isModulator = (int(*ONOFF_ID));
         
-        
+        modulator1Type = (int(*MODCHOICE_ID));
         
     }
     
@@ -143,7 +143,7 @@ public:
             // Iterate the channels
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
             {
-                outputBuffer.addSample(channel, startSample, (theSound * 0.1)); //args: (destChannel, destSample, valueToAdd)
+                outputBuffer.addSample(channel, startSample, (theSound * 0.2)); //args: (destChannel, destSample, valueToAdd)
             }
             // Advance startSample after channel iterator:
             ++startSample;
@@ -166,6 +166,8 @@ private:
     
                bool isModulator;
     double mod1wave;
+    
+    int modulator1Type;
     
     
     //Create an oscillator:

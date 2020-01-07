@@ -12,6 +12,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
+#include "Oscillator.h"
 
 //==============================================================================
 /**
@@ -44,7 +45,8 @@ private:
     //int numADSR{ static_cast<int>(std::size(ADSR))};
     //Label ADSRLabels[2];
     
-    
+    // oscillator class instance:
+    Oscillator oscGUI;
     
     
     Slider attackSlider;
@@ -58,7 +60,7 @@ private:
     
     TextButton onOff;
     
-    ComboBox choiceBox;
+    ComboBox modChoice;
     
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
@@ -83,8 +85,8 @@ public:
     // onoffAttach
     std::unique_ptr <AudioProcessorValueTreeState::ButtonAttachment> onOffAttach;
     
-    // choiceBoxAttach
-    std::unique_ptr <AudioProcessorValueTreeState::ComboBoxAttachment> choiceAttach;
+//    // choiceBoxAttach
+//    std::unique_ptr <AudioProcessorValueTreeState::ComboBoxAttachment> modChoiceAttach;
     
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (JuceSynthFrameworkAudioProcessorEditor)
