@@ -36,7 +36,7 @@ Oscillator::~Oscillator()
 
 void Oscillator::paint (Graphics& g)
 {
-    
+    g.fillAll(Colours::red);
 }
 
 void Oscillator::resized()

@@ -42,6 +42,8 @@
       <FILE id="opDJ0f" name="Oscillator.h" compile="0" resource="0" file="Source/Oscillator.h"/>
       <FILE id="VEGOT0" name="Envelope.cpp" compile="1" resource="0" file="Source/Envelope.cpp"/>
       <FILE id="b1hmwV" name="Envelope.h" compile="0" resource="0" file="Source/Envelope.h"/>
+      <FILE id="WemDeN" name="FMod.cpp" compile="1" resource="0" file="Source/FMod.cpp"/>
+      <FILE id="Clfhrv" name="FMod.h" compile="0" resource="0" file="Source/FMod.h"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>

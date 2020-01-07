@@ -13,37 +13,32 @@
 
 //==============================================================================
 JuceSynthFrameworkAudioProcessorEditor::JuceSynthFrameworkAudioProcessorEditor (JuceSynthFrameworkAudioProcessor& p)
-: AudioProcessorEditor (&p), processor (p), oscGUI(p), envGUI(p)
+: AudioProcessorEditor (&p), processor (p), oscGUI(p), envGUI(p), fmodGUI(p)
 {
     setSize(1000,300);
     
     // Add the oscillator gui
     addAndMakeVisible(&oscGUI);
     // Add the envelope GUI
+    // Add Fmod GUI
+    addAndMakeVisible(&fmodGUI);
+    
     addAndMakeVisible(&envGUI);
     
     
     
-     //textbutton Bool
-    onOff.setColour (TextButton::buttonColourId, Colours::purple);
-    onOff.setColour (TextButton::buttonOnColourId, Colours::yellow);
-    onOff.setClickingTogglesState (true);
-    onOff.onClick = [this] () {};
-    addAndMakeVisible(&onOff);
-    onOffAttach = std::make_unique <AudioProcessorValueTreeState::ButtonAttachment> (processor.treeState, ONOFF_ID, onOff);
     
     
-    //harmdial slider
-    harmDial.setSliderStyle (Slider::SliderStyle::RotaryVerticalDrag);
-    harmDial.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
-    addAndMakeVisible(&harmDial);
-    harmDialAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, HARMDIAL_ID, harmDial);
+//     //textbutton Bool
+//    onOff.setColour (TextButton::buttonColourId, Colours::purple);
+//    onOff.setColour (TextButton::buttonOnColourId, Colours::yellow);
+//    onOff.setClickingTogglesState (true);
+//    onOff.onClick = [this] () {};
+//    addAndMakeVisible(&onOff);
+//    onOffAttach = std::make_unique <AudioProcessorValueTreeState::ButtonAttachment> (processor.treeState, ONOFF_ID, onOff);
     
-    //modIndexDial slider
-    modIndexDial.setSliderStyle (Slider::SliderStyle::RotaryVerticalDrag);
-    modIndexDial.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
-    addAndMakeVisible(&modIndexDial);
-    modIndexDialAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, MODINDEXDIAL_ID, modIndexDial);
+    
+    
     
 
     
@@ -63,15 +58,15 @@ JuceSynthFrameworkAudioProcessorEditor::JuceSynthFrameworkAudioProcessorEditor (
 //    allLabels[1].setText("Release", dontSendNotification);
 //    allLabels[1].attachToComponent (&releaseSlider, false);
     
-    //harmRatio:
-    addAndMakeVisible (&allLabels[2]);
-    allLabels[2].setText("Harmonicity", dontSendNotification);
-    allLabels[2].attachToComponent (&harmDial, false);
-    
-    //mod index:
-    addAndMakeVisible (&allLabels[3]);
-    allLabels[3].setText("Mod Index", dontSendNotification);
-    allLabels[3].attachToComponent (&modIndexDial, false);
+//    //harmRatio:
+//    addAndMakeVisible (&allLabels[2]);
+//    allLabels[2].setText("Harmonicity", dontSendNotification);
+//    allLabels[2].attachToComponent (&harmDial, false);
+//
+//    //mod index:
+//    addAndMakeVisible (&allLabels[3]);
+//    allLabels[3].setText("Mod Index", dontSendNotification);
+//    allLabels[3].attachToComponent (&modIndexDial, false);
     
     
     //mod index amp mod
@@ -129,11 +124,7 @@ void JuceSynthFrameworkAudioProcessorEditor::resized()
     //choiceBox
 //    choiceBox.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
     
-    // dial
-    harmDial.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
     
-    // dial
-    modIndexDial.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
     
     
     //modChoice.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize / 3));
@@ -144,6 +135,8 @@ void JuceSynthFrameworkAudioProcessorEditor::resized()
     //const int componentHeight = 200;
     
     envGUI.setBounds(area.removeFromLeft(componentWidth).removeFromTop(componentHeight));
+    
+    fmodGUI.setBounds(area.removeFromLeft(componentWidth).removeFromTop(componentHeight));
     
     oscGUI.setBounds(area.removeFromLeft(componentWidth).removeFromTop(componentHeight));
     

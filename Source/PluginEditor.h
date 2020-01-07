@@ -14,6 +14,7 @@
 #include "PluginProcessor.h"
 #include "Oscillator.h"
 #include "Envelope.h"
+#include "FMod.h"
 
 //==============================================================================
 /**
@@ -50,13 +51,13 @@ private:
     Oscillator oscGUI;
     
     Envelope envGUI;
+    
+    FMod fmodGUI;
 
     
     
     
-    Slider harmDial;
     
-    Slider modIndexDial;
     
     TextButton onOff;
     
@@ -73,10 +74,7 @@ public:
     
     
     
-    // harmdialAttach
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> harmDialAttach;
     
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> modIndexDialAttach;
     
     // onoffAttach
     std::unique_ptr <AudioProcessorValueTreeState::ButtonAttachment> onOffAttach;
