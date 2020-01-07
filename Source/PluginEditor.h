@@ -13,6 +13,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
 #include "Oscillator.h"
+#include "Envelope.h"
 
 //==============================================================================
 /**
@@ -37,7 +38,7 @@ private:
     
     
     // Could make a vector of sliders..
-    //Label allLabels[5];
+    Label allLabels[5];
     
     //std::vector<Slider> allSliders;
     
@@ -48,11 +49,10 @@ private:
     // oscillator class instance:
     Oscillator oscGUI;
     
+    Envelope envGUI;
+
     
-    Slider attackSlider;
-    Label allLabels[5];
     
-    Slider releaseSlider;
     
     Slider harmDial;
     
@@ -70,11 +70,7 @@ public:
     //Scoped pointer is deprecated!
     //ScopedPointer <AudioProcessorValueTreeState::SliderAttachment> sliderTree;
     
-    //attackAttach
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> attackAttach;
     
-    //releaseAttach
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> releaseAttach;
     
     
     // harmdialAttach

@@ -31,7 +31,7 @@ public:
 private:
     ComboBox oscMenu;
     
-    unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> oscMenuAttach;
+    std::unique_ptr <AudioProcessorValueTreeState::ComboBoxAttachment> oscMenuAttach;
     
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.

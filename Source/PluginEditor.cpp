@@ -13,12 +13,14 @@
 
 //==============================================================================
 JuceSynthFrameworkAudioProcessorEditor::JuceSynthFrameworkAudioProcessorEditor (JuceSynthFrameworkAudioProcessor& p)
-: AudioProcessorEditor (&p), processor (p), oscGUI(p)
+: AudioProcessorEditor (&p), processor (p), oscGUI(p), envGUI(p)
 {
     setSize(1000,300);
     
-    
+    // Add the oscillator gui
     addAndMakeVisible(&oscGUI);
+    // Add the envelope GUI
+    addAndMakeVisible(&envGUI);
     
     
     
@@ -30,19 +32,6 @@ JuceSynthFrameworkAudioProcessorEditor::JuceSynthFrameworkAudioProcessorEditor (
     addAndMakeVisible(&onOff);
     onOffAttach = std::make_unique <AudioProcessorValueTreeState::ButtonAttachment> (processor.treeState, ONOFF_ID, onOff);
     
-    
-    //attack slider
-    attackSlider.setSliderStyle (Slider::SliderStyle::LinearVertical);
-    attackSlider.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
-    addAndMakeVisible(&attackSlider);
-    attackAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, ATTACK_ID, attackSlider);
-
-    //release slider
-    releaseSlider.setSliderStyle (Slider::SliderStyle::LinearVertical);
-    releaseSlider.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
-    addAndMakeVisible(&releaseSlider);
-    releaseAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, RELEASE_ID, releaseSlider);
-
     
     //harmdial slider
     harmDial.setSliderStyle (Slider::SliderStyle::RotaryVerticalDrag);
@@ -67,12 +56,12 @@ JuceSynthFrameworkAudioProcessorEditor::JuceSynthFrameworkAudioProcessorEditor (
     addAndMakeVisible (&allLabels[0]);
     allLabels[0].setText("Attack", dontSendNotification);
     
-    allLabels[0].attachToComponent(&attackSlider, false);
-    
-    //release:
-    addAndMakeVisible (&allLabels[1]);
-    allLabels[1].setText("Release", dontSendNotification);
-    allLabels[1].attachToComponent (&releaseSlider, false);
+//    allLabels[0].attachToComponent(&attackSlider, false);
+//
+//    //release:
+//    addAndMakeVisible (&allLabels[1]);
+//    allLabels[1].setText("Release", dontSendNotification);
+//    allLabels[1].attachToComponent (&releaseSlider, false);
     
     //harmRatio:
     addAndMakeVisible (&allLabels[2]);
@@ -123,6 +112,11 @@ void JuceSynthFrameworkAudioProcessorEditor::paint (Graphics& g)
 
 void JuceSynthFrameworkAudioProcessorEditor::resized()
 {
+    Rectangle<int> area = getLocalBounds();
+    
+    const int componentWidth = 200;
+    const int componentHeight = 200;
+    
     auto bounds = getLocalBounds();
     const int componentSize { 100 };
     // This is generally where you'll want to lay out the positions of any
@@ -130,11 +124,7 @@ void JuceSynthFrameworkAudioProcessorEditor::resized()
    
     
     
-    //attackSlider
-    attackSlider.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
     
-    //releaseSlider
-    releaseSlider.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
     
     //choiceBox
 //    choiceBox.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
@@ -148,15 +138,18 @@ void JuceSynthFrameworkAudioProcessorEditor::resized()
     
     //modChoice.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize / 3));
     
-    Rectangle<int> area = getLocalBounds(); //this is the dimensions of the whole UI
+    //Rectangle<int> area = getLocalBounds(); //this is the dimensions of the whole UI
     
-    const int componentWidth = 200;
-    const int componentHeight = 200;
+    //const int componentWidth = 200;
+    //const int componentHeight = 200;
     
-    //oscGUI.setBounds(area.removeFromLeft(componentWidth).removeFromTop(componentHeight));
+    envGUI.setBounds(area.removeFromLeft(componentWidth).removeFromTop(componentHeight));
+    
+    oscGUI.setBounds(area.removeFromLeft(componentWidth).removeFromTop(componentHeight));
     
     
-    oscGUI.setBounds(bounds.removeFromLeft(100).withSizeKeepingCentre(componentHeight, componentWidth));
+    
+    //oscGUI.setBounds(bounds.removeFromLeft(100).withSizeKeepingCentre(componentHeight, componentWidth));
     
     
     
