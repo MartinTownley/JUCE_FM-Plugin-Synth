@@ -224,12 +224,15 @@ void JuceSynthFrameworkAudioProcessor::processBlock (AudioBuffer<float>& buffer,
             myVoice->getParam (treeState.getRawParameterValue (ATTACK_ID),
                                treeState.getRawParameterValue (RELEASE_ID),
                                treeState.getRawParameterValue(HARMDIAL_ID),
-                               treeState.getRawParameterValue(MODINDEXDIAL_ID));
+                               treeState.getRawParameterValue(MODINDEXDIAL_ID),
+                               
+                                    treeState.getRawParameterValue(ONOFF_ID));
             
             
         }
     }
     
+    //std::cout << treeState.getRawParameterValue(ONOFF_ID);
     //ScopedNoDenormals noDenormals;
     //auto totalNumInputChannels  = getTotalNumInputChannels();
     //auto totalNumOutputChannels = getTotalNumOutputChannels();

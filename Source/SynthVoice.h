@@ -27,7 +27,7 @@ public:
     }
     //==========================================
     
-    void getParam (float* ATTACK_ID, float* RELEASE_ID, float* HARMDIAL_ID, float* MODINDEX_ID)
+    void getParam (float* ATTACK_ID, float* RELEASE_ID, float* HARMDIAL_ID, float* MODINDEX_ID, float* ONOFF_ID)
     {
         // get parameter from the slider and pass to the attack variable:
         env1.setAttack(int(*ATTACK_ID)); //cast as a float since envelope attack takes a double. or could just have it as a double in the plugineditor H
@@ -38,6 +38,9 @@ public:
         
         // Modulation Index
         modIndex = (double(*MODINDEX_ID));
+        
+        //boolean for modulator
+        isModulator = (int(*ONOFF_ID));
         
         
         
@@ -119,12 +122,20 @@ public:
             //modIndex = mod1freq * mod1amp;
             mod0amp = mod0freq * modIndex;
             
+            if(isModulator)
+            {
+                mod1wave = modulator1.phasor(mod1freq);
+            } else {
+                mod1wave = 1;
+            }
+            
+            
+           // = modulator1.phasor(mod1freq);
+            
             double theWave = carrier.sinewave(carrierFreq
                                               + (modulator0.sinewave(mod0freq)
-                                                 * mod0amp));
+                                                 * (mod0amp * mod1wave)));
                                               
-            
-            
             double theSound = (env1.adsr(theWave, env1.trigger) * level);
             
             //double filteredSound = filter1.lores(theSound, 200, 0.1);
@@ -136,8 +147,6 @@ public:
             }
             // Advance startSample after channel iterator:
             ++startSample;
-            
-            
         }
         
         
@@ -154,6 +163,10 @@ private:
     double mod1amp;
     double mod1freq;
     int harmRatio;
+    
+               bool isModulator;
+    double mod1wave;
+    
     
     //Create an oscillator:
     maxiOsc carrier, modulator0, modulator1;

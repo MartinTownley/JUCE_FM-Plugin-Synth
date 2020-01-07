@@ -26,11 +26,13 @@
 #define MODINDEXDIAL_ID "modIndex"
 #define MODINDEXDIAL_NAME "ModIndex"
 
-#define ONOFF_ID "onoff"
-#define ONOFF_NAME "Onoff"
+#define ONOFF_ID "onOff"
+#define ONOFF_NAME "OnOff"
 
 #define CHOICE_ID "choice"
 #define CHOICE_NAME "Choice"
+
+
 
 //==============================================================================
 /**

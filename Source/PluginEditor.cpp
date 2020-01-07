@@ -22,8 +22,10 @@ JuceSynthFrameworkAudioProcessorEditor::JuceSynthFrameworkAudioProcessorEditor (
     onOff.setColour (TextButton::buttonOnColourId, Colours::yellow);
     onOff.setClickingTogglesState (true);
     onOff.onClick = [this] () {};
-    addAndMakeVisible(onOff);
-
+    addAndMakeVisible(&onOff);
+    onOffAttach = std::make_unique <AudioProcessorValueTreeState::ButtonAttachment> (processor.treeState, ONOFF_ID, onOff);
+    
+    
     //attack slider
     attackSlider.setSliderStyle (Slider::SliderStyle::LinearVertical);
     attackSlider.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
@@ -66,12 +68,12 @@ JuceSynthFrameworkAudioProcessorEditor::JuceSynthFrameworkAudioProcessorEditor (
     
     //harmRatio:
     addAndMakeVisible (&allLabels[2]);
-    allLabels[2].setText("Harm", dontSendNotification);
+    allLabels[2].setText("Harmonicity", dontSendNotification);
     allLabels[2].attachToComponent (&harmDial, false);
     
     //harmRatio:
     addAndMakeVisible (&allLabels[3]);
-    allLabels[3].setText("ModIndex", dontSendNotification);
+    allLabels[3].setText("Mod Index", dontSendNotification);
     allLabels[3].attachToComponent (&modIndexDial, false);
     //otherLookAndFeel.setColour(Slider::thumbColourId, Colours::purple);
     //attackSlider.setLookAndFeel(&otherLookAndFeel);
