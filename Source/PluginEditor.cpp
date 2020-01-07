@@ -56,14 +56,7 @@ JuceSynthFrameworkAudioProcessorEditor::JuceSynthFrameworkAudioProcessorEditor (
     addAndMakeVisible(&modIndexDial);
     modIndexDialAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, MODINDEXDIAL_ID, modIndexDial);
     
-//    //Choice
-//    modChoice.addItem ("OFF", 1);
-//    modChoice.addItem ("SINE", 2);
-//    modChoice.addItem ("TRI", 3);
-//    modChoice.addItem ("SAW", 4);
-//    modChoice.addItem ("SQUARE", 5);
-//    addAndMakeVisible(modChoice);
-//    modChoiceAttach = std::make_unique <AudioProcessorValueTreeState::ComboBoxAttachment> (processor.treeState, MODCHOICE_ID, modChoice);
+
     
     
     
@@ -90,6 +83,12 @@ JuceSynthFrameworkAudioProcessorEditor::JuceSynthFrameworkAudioProcessorEditor (
     addAndMakeVisible (&allLabels[3]);
     allLabels[3].setText("Mod Index", dontSendNotification);
     allLabels[3].attachToComponent (&modIndexDial, false);
+    
+    
+    //mod index amp mod
+    addAndMakeVisible(&allLabels[4]);
+    allLabels[4].setText("Mod Index Amp Mod Wave Select", dontSendNotification);
+    allLabels[4].attachToComponent (&oscGUI, false);
     //otherLookAndFeel.setColour(Slider::thumbColourId, Colours::purple);
     //attackSlider.setLookAndFeel(&otherLookAndFeel);
    

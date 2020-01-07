@@ -157,16 +157,11 @@ public:
             //modIndex = mod1freq * mod1amp;
             mod0amp = mod0freq * modIndex;
             
-//            if(isModulator)
-//            {
-//                mod1wave = modulator1.phasor(mod1freq);
-//            } else {
-//                mod1wave = 1;
-//            }
+//           
             
             
-           // = modulator1.phasor(mod1freq);
-            
+           
+            //frequency modulation happens below
             double theWave = carrier.sinewave(carrierFreq
                                               + (modulator0.sinewave(mod0freq)
                                                  * (mod0amp * setOscType() )));
