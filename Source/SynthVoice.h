@@ -27,23 +27,21 @@ public:
     }
     //==========================================
     
-    void getParam (float* ATTACK_ID, float* RELEASE_ID, float* HARMDIAL_ID, float* MODINDEX_ID, float* ONOFF_ID)
+    void getADSR (float* ATTACK_ID, float* RELEASE_ID)
     {
         // get parameter from the slider and pass to the attack variable:
         env1.setAttack(int(*ATTACK_ID)); //cast as a float since envelope attack takes a double. or could just have it as a double in the plugineditor H
         env1.setRelease(int(*RELEASE_ID));
-        
+    }
+    
+    //==========================================
+    void getFMParams (float* HARMDIAL_ID, float* MODINDEX_ID)
+    {
         // Harmonicity Radio
         harmRatio = (int(*HARMDIAL_ID));
         
         // Modulation Index
         modIndex = (double(*MODINDEX_ID));
-        
-        //boolean for modulator
-        isModulator = (int(*ONOFF_ID));
-        
-        //modulator1Type = (int(*MODCHOICE_ID));
-        
     }
     
     //==========================================
@@ -55,13 +53,14 @@ public:
     }
     //==========================================
     
+    void getIndexModAmpFreq (float* INDEXMODFREQ_ID)
+    {
+        mod1freq = (int(* INDEXMODFREQ_ID));
+    }
+    //==========================================
     double setOscType ()
     {
-//        if (modulator1Type ==0)
-//        {
-//            return modulator1.sinewave(mod1freq);        }
-        
-        
+
         switch (modulator1Type) {
             case 0:
                 return 1;
@@ -78,6 +77,8 @@ public:
                 break;
         }
     }
+    
+    
     
     
     //==========================================
@@ -147,7 +148,7 @@ public:
         
         
         mod1amp = 19;
-        mod1freq = 2;
+        //mod1freq = 2;
         
         
         for (int sample = 0; sample < numSamples; ++sample)

@@ -29,9 +29,19 @@ public:
     void comboBoxChanged (ComboBox*) override;
 
 private:
+    // oscillator menu
     ComboBox oscMenu;
-    
+    // attach oscillator menu
     std::unique_ptr <AudioProcessorValueTreeState::ComboBoxAttachment> oscMenuAttach;
+    
+    
+    
+    
+    // modindex amplitude modulator frequency dial
+    Slider indexAmpModFreqDial;
+    // attach indexAmpModFreq dial
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> indexAmpModFreqAttach;
+    
     
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.

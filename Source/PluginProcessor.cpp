@@ -68,15 +68,10 @@ AudioProcessorValueTreeState::ParameterLayout JuceSynthFrameworkAudioProcessor::
     auto modIndexParam = std::make_unique<AudioParameterFloat>(MODINDEXDIAL_ID, MODINDEXDIAL_NAME, 1.0f, 200.0f, 1.0f);
     
     
-    
-    auto onOffParam = std::make_unique<AudioParameterBool>
-    (ONOFF_ID, ONOFF_NAME, false);
-    
-    //auto choiceParam = std::make_unique <AudioParameterChoice>(MODCHOICE_ID, MODCHOICE_NAME, StringArray ("OFF", "SINE", "TRI", "PHASOR", "SQUARE"), 0);
-    
-    auto oscParam = std::make_unique<AudioParameterChoice>(OSCMENU_ID, OSCMENU_NAME, StringArray ("OFFS", "SINE", "SQUARE", "SAW"), 1);
+    auto oscSelectParam = std::make_unique<AudioParameterChoice>(OSCMENU_ID, OSCMENU_NAME, StringArray ("OFFS", "SINE", "SQUARE", "SAW"), 1);
     
     
+    auto indexModFreqParam = std::make_unique<AudioParameterFloat>(INDEXMODFREQ_ID, INDEXMODFREQ_NAME, 0.0f, 10.0f, 1.0f);
     //for (int i = 1; i < 9; ++i)
     //{
         // std::move actually moves the object, rather than making a copy then deleting it. More efficient:
@@ -85,9 +80,10 @@ AudioProcessorValueTreeState::ParameterLayout JuceSynthFrameworkAudioProcessor::
     params.push_back (std::move(releaseParam));
     params.push_back (std::move(harmDialParam));
     params.push_back (std::move(modIndexParam));
-    params.push_back (std::move(oscParam));
+    params.push_back (std::move(oscSelectParam));
+    params.push_back (std::move(indexModFreqParam));
     
-    params.push_back (std::move(onOffParam));
+    
     //params.push_back (std::move(choiceParam));
     
     //}
@@ -222,15 +218,14 @@ void JuceSynthFrameworkAudioProcessor::processBlock (AudioBuffer<float>& buffer,
         // If the voice is dynamically cast as a synth voice, relay the information:
         if (myVoice = dynamic_cast<SynthVoice*>(mySynth.getVoice(i)))
         {
-            myVoice->getParam (treeState.getRawParameterValue (ATTACK_ID),
-                               treeState.getRawParameterValue (RELEASE_ID),
-                               treeState.getRawParameterValue(HARMDIAL_ID),
-                               treeState.getRawParameterValue(MODINDEXDIAL_ID),
-                               
-                               treeState.getRawParameterValue(ONOFF_ID));
-                                    //treeState.getRawParameterValue(MODCHOICE_ID));
+            myVoice->getADSR (treeState.getRawParameterValue (ATTACK_ID),
+                              treeState.getRawParameterValue (RELEASE_ID));
+                              
+            myVoice->getFMParams(treeState.getRawParameterValue (HARMDIAL_ID), treeState.getRawParameterValue(MODINDEXDIAL_ID) );
             
             myVoice->getOscType (treeState.getRawParameterValue (OSCMENU_ID));
+            
+            myVoice->getIndexModAmpFreq (treeState.getRawParameterValue (INDEXMODFREQ_ID));
                                
             
             
