@@ -12,7 +12,8 @@
 #include "Oscillator.h"
 
 //==============================================================================
-Oscillator::Oscillator()
+Oscillator::Oscillator(JuceSynthFrameworkAudioProcessor& p) :
+processor(p)
 {
     setSize(200, 200);
     
@@ -20,10 +21,13 @@ Oscillator::Oscillator()
     oscMenu.addItem("SINE", 2);
     oscMenu.addItem("SQUARE", 3);
     oscMenu.addItem("SAW", 4);
+    oscMenu.setJustificationType(Justification::left);
     addAndMakeVisible(&oscMenu);
     oscMenu.addListener(this);
-    oscMenu.setJustificationType(Justification::left);
-
+    
+    oscMenuAttach = std::make_unique <AudioProcessorValueTreeState::ComboBoxAttachment>(processor.treeState, OSCMENU_ID, oscMenu);
+    
+    //modChoiceAttach = std::make_unique <AudioProcessorValueTreeState::ComboBoxAttachment> (processor.treeState, MODCHOICE_ID, modChoice);
 }
 
 Oscillator::~Oscillator()

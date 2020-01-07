@@ -27,7 +27,7 @@ public:
     }
     //==========================================
     
-    void getParam (float* ATTACK_ID, float* RELEASE_ID, float* HARMDIAL_ID, float* MODINDEX_ID, float* ONOFF_ID, float* MODCHOICE_ID)
+    void getParam (float* ATTACK_ID, float* RELEASE_ID, float* HARMDIAL_ID, float* MODINDEX_ID, float* ONOFF_ID)
     {
         // get parameter from the slider and pass to the attack variable:
         env1.setAttack(int(*ATTACK_ID)); //cast as a float since envelope attack takes a double. or could just have it as a double in the plugineditor H
@@ -42,12 +42,45 @@ public:
         //boolean for modulator
         isModulator = (int(*ONOFF_ID));
         
-        modulator1Type = (int(*MODCHOICE_ID));
+        //modulator1Type = (int(*MODCHOICE_ID));
         
     }
     
     //==========================================
     
+    void getOscType (float* selection)
+    {
+//        std::cout << *selection << std::endl;
+        modulator1Type = (int(*selection));
+    }
+    //==========================================
+    
+    double setOscType ()
+    {
+//        if (modulator1Type ==0)
+//        {
+//            return modulator1.sinewave(mod1freq);        }
+        
+        
+        switch (modulator1Type) {
+            case 0:
+                return 1;
+                break;
+            case 1:
+                return modulator1.sinewave(mod1freq);
+                break;
+            case 2:
+                return modulator1.square(mod1freq);
+                break;
+            case 3:
+                return modulator1.phasor(mod1freq);
+            default:
+                break;
+        }
+    }
+    
+    
+    //==========================================
     void startNote (int midiNoteNumber, float velocity, SynthesiserSound* sound, int currentPitchWheelPosition)
     {
         // Velocity will be a value between 0 and 1, instantiated when you press a key:
@@ -57,6 +90,8 @@ public:
         level = velocity;
         
         carrierFreq = MidiMessage::getMidiNoteInHertz(midiNoteNumber);
+        
+        modulator1.phaseReset(0);
         
         std::cout << midiNoteNumber << std::endl;
         
@@ -122,19 +157,19 @@ public:
             //modIndex = mod1freq * mod1amp;
             mod0amp = mod0freq * modIndex;
             
-            if(isModulator)
-            {
-                mod1wave = modulator1.phasor(mod1freq);
-            } else {
-                mod1wave = 1;
-            }
+//            if(isModulator)
+//            {
+//                mod1wave = modulator1.phasor(mod1freq);
+//            } else {
+//                mod1wave = 1;
+//            }
             
             
            // = modulator1.phasor(mod1freq);
             
             double theWave = carrier.sinewave(carrierFreq
                                               + (modulator0.sinewave(mod0freq)
-                                                 * (mod0amp * mod1wave)));
+                                                 * (mod0amp * setOscType() )));
                                               
             double theSound = (env1.adsr(theWave, env1.trigger) * level);
             
@@ -165,9 +200,10 @@ private:
     int harmRatio;
     
                bool isModulator;
-    double mod1wave;
+    //double mod1wave;
     
     int modulator1Type;
+    
     
     
     //Create an oscillator:

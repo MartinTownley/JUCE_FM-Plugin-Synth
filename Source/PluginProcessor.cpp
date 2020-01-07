@@ -72,9 +72,9 @@ AudioProcessorValueTreeState::ParameterLayout JuceSynthFrameworkAudioProcessor::
     auto onOffParam = std::make_unique<AudioParameterBool>
     (ONOFF_ID, ONOFF_NAME, false);
     
-    auto choiceParam = std::make_unique <AudioParameterChoice>(MODCHOICE_ID, MODCHOICE_NAME, StringArray ("OFF", "SINE", "TRI", "PHASOR", "SQUARE"), 0);
+    //auto choiceParam = std::make_unique <AudioParameterChoice>(MODCHOICE_ID, MODCHOICE_NAME, StringArray ("OFF", "SINE", "TRI", "PHASOR", "SQUARE"), 0);
     
-    
+    auto oscParam = std::make_unique<AudioParameterChoice>(OSCMENU_ID, OSCMENU_NAME, StringArray ("OFFS", "SINE", "SQUARE", "SAW"), 1);
     
     
     //for (int i = 1; i < 9; ++i)
@@ -85,10 +85,10 @@ AudioProcessorValueTreeState::ParameterLayout JuceSynthFrameworkAudioProcessor::
     params.push_back (std::move(releaseParam));
     params.push_back (std::move(harmDialParam));
     params.push_back (std::move(modIndexParam));
-
+    params.push_back (std::move(oscParam));
     
     params.push_back (std::move(onOffParam));
-    params.push_back (std::move(choiceParam));
+    //params.push_back (std::move(choiceParam));
     
     //}
     
@@ -227,8 +227,11 @@ void JuceSynthFrameworkAudioProcessor::processBlock (AudioBuffer<float>& buffer,
                                treeState.getRawParameterValue(HARMDIAL_ID),
                                treeState.getRawParameterValue(MODINDEXDIAL_ID),
                                
-                                    treeState.getRawParameterValue(ONOFF_ID),
-                                    treeState.getRawParameterValue(MODCHOICE_ID));
+                               treeState.getRawParameterValue(ONOFF_ID));
+                                    //treeState.getRawParameterValue(MODCHOICE_ID));
+            
+            myVoice->getOscType (treeState.getRawParameterValue (OSCMENU_ID));
+                               
             
             
         }

@@ -13,7 +13,7 @@
 
 //==============================================================================
 JuceSynthFrameworkAudioProcessorEditor::JuceSynthFrameworkAudioProcessorEditor (JuceSynthFrameworkAudioProcessor& p)
-: AudioProcessorEditor (&p), processor (p)
+: AudioProcessorEditor (&p), processor (p), oscGUI(p)
 {
     setSize(1000,300);
     
@@ -64,6 +64,8 @@ JuceSynthFrameworkAudioProcessorEditor::JuceSynthFrameworkAudioProcessorEditor (
 //    modChoice.addItem ("SQUARE", 5);
 //    addAndMakeVisible(modChoice);
 //    modChoiceAttach = std::make_unique <AudioProcessorValueTreeState::ComboBoxAttachment> (processor.treeState, MODCHOICE_ID, modChoice);
+    
+    
     
     
     

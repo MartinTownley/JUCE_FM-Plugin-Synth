@@ -29,8 +29,11 @@
 #define ONOFF_ID "onOff"
 #define ONOFF_NAME "OnOff"
 
-#define MODCHOICE_ID "modChoice"
-#define MODCHOICE_NAME "ModChoice"
+//#define MODCHOICE_ID "modChoice"
+//#define MODCHOICE_NAME "ModChoice"
+
+#define OSCMENU_ID "oscMenu"
+#define OSCMENU_NAME "OscMenu"
 
 
 
