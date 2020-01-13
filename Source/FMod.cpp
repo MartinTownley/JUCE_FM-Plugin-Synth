@@ -30,6 +30,16 @@ processor(p)
     addAndMakeVisible(&modIndexDial);
     modIndexDialAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, MODINDEXDIAL_ID, modIndexDial);
     
+    //LABELS
+    
+    addAndMakeVisible(&harmLabel);
+    harmLabel.setText("Harmonicity", dontSendNotification);
+    harmLabel.attachToComponent(&harmDial, false);
+    
+    addAndMakeVisible(&modIndexLabel);
+    modIndexLabel.setText("Mod Index", dontSendNotification);
+    modIndexLabel.attachToComponent(&modIndexDial, false);
+    
 
 }
 
@@ -40,20 +50,20 @@ FMod::~FMod()
 void FMod::paint (Graphics& g)
 {
     /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
-
-       You should replace everything in this method with your own
-       drawing code..
-    */
-
+     draws some placeholder text to get you started.
+     
+     You should replace everything in this method with your own
+     drawing code..
+     */
+    
     g.fillAll (Colours::green);   // clear the background
-
+    
     g.setColour (Colours::grey);
     g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
-
+    
     g.setColour (Colours::white);
     g.setFont (14.0f);
-     g.drawText("FMod", 10, 10, 200, 10, Justification::centred);  // draw some placeholder text
+    g.drawText("FREQUENCY MODULATION", 10, 175, 200, 10, Justification::centred);  // draw some placeholder text
 }
 
 void FMod::resized()

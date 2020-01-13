@@ -29,20 +29,24 @@ private:
     Slider attackSlider;
     
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> attackAttach;
+    Label attackLabel;
     
     //decaySlider & attachment
     Slider decaySlider;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> decayAttach;
+    Label decayLabel;
     
     
     //sustainSlider & attachment
     Slider sustainSlider;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> sustainAttach;
+    Label sustainLabel;
     
     
     //releaseSlider & attachment
     Slider releaseSlider;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> releaseAttach;
+    Label releaseLabel;
     
     
     

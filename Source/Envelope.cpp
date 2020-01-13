@@ -23,6 +23,10 @@ processor(p)
     attackSlider.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
     addAndMakeVisible(&attackSlider);
     attackAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, ATTACK_ID, attackSlider);
+    // Labels
+    addAndMakeVisible(&attackLabel);
+    attackLabel.setText("Attack Time", dontSendNotification);
+    attackLabel.attachToComponent(&attackSlider, false);
     
     //decay slider
     decaySlider.setSliderStyle (Slider::SliderStyle::LinearVertical);
@@ -30,6 +34,9 @@ processor(p)
     addAndMakeVisible(&decaySlider);
     decayAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, DECAY_ID, decaySlider);
     
+    addAndMakeVisible(&decayLabel);
+    decayLabel.setText("Decay Time", dontSendNotification);
+    decayLabel.attachToComponent(&decaySlider, false);
     
     
     //sustain slider
@@ -37,9 +44,9 @@ processor(p)
     sustainSlider.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
     addAndMakeVisible(&sustainSlider);
     decayAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, SUSTAIN_ID, sustainSlider);
-    
-    
-    
+    addAndMakeVisible(&sustainLabel);
+    sustainLabel.setText("Sustain Level", dontSendNotification);
+    sustainLabel.attachToComponent(&sustainSlider, false);
     
     //release slider
     releaseSlider.setSliderStyle (Slider::SliderStyle::LinearVertical);
@@ -47,6 +54,9 @@ processor(p)
     addAndMakeVisible(&releaseSlider);
     releaseAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, RELEASE_ID, releaseSlider);
     
+    addAndMakeVisible(&releaseLabel);
+    releaseLabel.setText("Release Time", dontSendNotification);
+    releaseLabel.attachToComponent(&releaseSlider, false);
 
 }
 
@@ -58,7 +68,7 @@ void Envelope::paint (Graphics& g)
 {
     g.fillAll(Colours::purple);
     
-       // clear the background
+    // clear the background
     
     g.setColour (Colours::grey);
     g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
@@ -67,9 +77,8 @@ void Envelope::paint (Graphics& g)
     g.setFont (14.0f);
     //g.drawText ("FMod", getLocalBounds(),
     //Justification::centred, true);
-    g.drawText("Envelope", 10, 10, 200, 10, Justification::centred);
+    g.drawText("ENVELOPE", 100, 175, 200, 10, Justification::centred);
     // draw some placeholder text
-    
 }
 
 void Envelope::resized()

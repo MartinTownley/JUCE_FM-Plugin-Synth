@@ -34,6 +34,16 @@ processor(p)
     addAndMakeVisible(&indexAmpModFreqDial);
     // ATTACH DIAL
     indexAmpModFreqAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, INDEXMODFREQ_ID, indexAmpModFreqDial );
+    
+    
+    //LABELS
+    addAndMakeVisible(&oscMenuLabel);
+    oscMenuLabel.setText("LFO Type", dontSendNotification);
+    oscMenuLabel.attachToComponent(&oscMenu, false);
+    
+    addAndMakeVisible(&indexAmpModFreqDialLabel);
+    indexAmpModFreqDialLabel.setText("LFO Frequency", dontSendNotification);
+    indexAmpModFreqDialLabel.attachToComponent(&indexAmpModFreqDial, false);
 }
 
 Oscillator::~Oscillator()
@@ -50,8 +60,8 @@ void Oscillator::paint (Graphics& g)
     g.setColour (Colours::white);
     g.setFont (14.0f);
     //g.drawText ("FMod", getLocalBounds(),
-                //Justification::centred, true);
-    g.drawText("FMod Amplitude LFO", 10, 10, 200, 10, Justification::centred);
+    //Justification::centred, true);
+    g.drawText("FMOD AMPLITUDE LFO", 10, 175, 200, 10, Justification::centred);
     // draw some placeholder text
 }
 

@@ -30,9 +30,11 @@ private:
     
     // harmdialAttach
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> harmDialAttach;
+    Label harmLabel;
     
     // modindexAttach
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> modIndexDialAttach;
+    Label modIndexLabel;
     
     
     // This reference is provided as a quick way for your editor to

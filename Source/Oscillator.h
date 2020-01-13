@@ -33,7 +33,7 @@ private:
     ComboBox oscMenu;
     // attach oscillator menu
     std::unique_ptr <AudioProcessorValueTreeState::ComboBoxAttachment> oscMenuAttach;
-    
+    Label oscMenuLabel;
     
     
     
@@ -41,6 +41,7 @@ private:
     Slider indexAmpModFreqDial;
     // attach indexAmpModFreq dial
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> indexAmpModFreqAttach;
+    Label indexAmpModFreqDialLabel;
     
     
     // This reference is provided as a quick way for your editor to

@@ -34,13 +34,9 @@ public:
 //        // get parameter from the slider and pass to the attack variable:
 //        env1.setAttack(int(*ATTACK_ID)); //cast as a float since envelope attack takes a double. or could just have it as a double in the plugineditor H
 //
-//        env1.setDecay(int(*DECAY_ID));
-//
-//        env1.setSustain(*SUSTAIN_ID); //sustain remains as a float
-//
-//        env1.setRelease(int(*RELEASE_ID));
+//        
         
-        adsrParams.attack = * ATTACK_ID; //cast to int
+        adsrParams.attack = * ATTACK_ID;
         adsrParams.decay = * DECAY_ID;
         adsrParams.sustain = * SUSTAIN_ID;
         adsrParams.release = * RELEASE_ID;
@@ -117,7 +113,7 @@ public:
         
         modulator1.phaseReset(0);
         
-        std::cout << midiNoteNumber << std::endl;
+        //std::cout << midiNoteNumber << std::endl;
         
         
     }
@@ -131,9 +127,12 @@ public:
         
         // When we release a key, we want to be able to use that voice for the next key we press.
         // Allow tailOff boolean
-        allowTailOff = true;
         
         adsr.noteOff();
+        
+        allowTailOff = true;
+        
+        
         //env1.trigger = 0;
         
         if (velocity == 0)
@@ -162,20 +161,14 @@ public:
         // This is where we'll put our audio callback.
         
         // Set arguments for envelope:
-       
-        // May not be best place to set these variables:
-        //env1.setAttack(2000);
-        //env1.setDecay(5000);
-        //env1.setSustain(0.1);
+      
         
-        // Set adsr Parameters
         
-        adsr.setParameters (adsrParams);
         
         
         mod1amp = 19;
         //mod1freq = 2;
-        
+        adsr.setParameters (adsrParams);
         
         for (int sample = 0; sample < numSamples; ++sample)
         {
@@ -184,24 +177,22 @@ public:
             //modIndex = mod1freq * mod1amp;
             mod0amp = mod0freq * modIndex;
             
-//           
-            
-            
-           
-            //frequency modulation happens below
+//           //frequency modulation happens below
             double theWave = carrier.sinewave(carrierFreq
                                               + (modulator0.sinewave(mod0freq)
                                                  * (mod0amp * setOscType() )));
                                               
-           // double theSound = (env1.adsr(theWave, env1.trigger) * level);
+           
             
             double theSound = adsr.getNextSample() * theWave;
             
-            //double filteredSound = filter1.lores(theSound, 200, 0.1);
+            
             
             // Iterate the channels
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
             {
+                
+                
                 outputBuffer.addSample(channel, startSample, (theSound * 0.2)); //args: (destChannel, destSample, valueToAdd)
             }
             // Advance startSample after channel iterator:
@@ -214,6 +205,10 @@ public:
     //==========================================
     
 private:
+    
+    ADSR adsr;
+    ADSR::Parameters adsrParams;
+    
     double level;
     double carrierFreq;
     double mod0freq;
@@ -223,7 +218,7 @@ private:
     double mod1freq;
     int harmRatio;
     
-               bool isModulator;
+    bool isModulator;
     //double mod1wave;
     
     int modulator1Type;
@@ -232,15 +227,5 @@ private:
     
     //Create an oscillator:
     maxiOsc carrier, modulator0, modulator1;
-    
-    
-    //Replacing maxiEnvelope with JUCE ADSR
-    //maxiEnv env1;
-    //maxiFilter filter1;
-    
-    ADSR adsr;
-    ADSR::Parameters adsrParams;
-    
-    
     
 };

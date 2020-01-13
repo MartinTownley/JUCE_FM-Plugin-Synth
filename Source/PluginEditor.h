@@ -36,30 +36,17 @@ public:
 
 private:
     
-    
-    
-    // Could make a vector of sliders..
-    Label allLabels[5];
-    
-    //std::vector<Slider> allSliders;
-    
-    
-    //int numADSR{ static_cast<int>(std::size(ADSR))};
-    //Label ADSRLabels[2];
-    
     // oscillator class instance:
     Oscillator oscGUI;
     
-    Envelope envGUI;
-    
     FMod fmodGUI;
 
+    Envelope envGUI;
     
     
     
     
     
-    TextButton onOff;
     
     //ComboBox modChoice;
     
@@ -68,19 +55,7 @@ private:
     JuceSynthFrameworkAudioProcessor& processor;
 
 public:
-    //Scoped pointer is deprecated!
-    //ScopedPointer <AudioProcessorValueTreeState::SliderAttachment> sliderTree;
     
-    
-    
-    
-    
-    
-    // onoffAttach
-    std::unique_ptr <AudioProcessorValueTreeState::ButtonAttachment> onOffAttach;
-    
-//    // choiceBoxAttach
-//    std::unique_ptr <AudioProcessorValueTreeState::ComboBoxAttachment> modChoiceAttach;
     
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (JuceSynthFrameworkAudioProcessorEditor)

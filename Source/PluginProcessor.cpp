@@ -1,12 +1,12 @@
 /*
-  ==============================================================================
-
-    This file was auto-generated!
-
-    It contains the basic framework code for a JUCE plugin processor.
-
-  ==============================================================================
-*/
+ ==============================================================================
+ 
+ This file was auto-generated!
+ 
+ It contains the basic framework code for a JUCE plugin processor.
+ 
+ ==============================================================================
+ */
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
@@ -14,17 +14,17 @@
 //==============================================================================
 JuceSynthFrameworkAudioProcessor::JuceSynthFrameworkAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
-     : AudioProcessor (BusesProperties()
-                     #if ! JucePlugin_IsMidiEffect
-                      #if ! JucePlugin_IsSynth
-                       .withInput  ("Input",  AudioChannelSet::stereo(), true)
-                      #endif
-                       .withOutput ("Output", AudioChannelSet::stereo(), true)
-                     #endif
-                       ),
+: AudioProcessor (BusesProperties()
+#if ! JucePlugin_IsMidiEffect
+#if ! JucePlugin_IsSynth
+                  .withInput  ("Input",  AudioChannelSet::stereo(), true)
+#endif
+                  .withOutput ("Output", AudioChannelSet::stereo(), true)
+#endif
+                  ),
 //attackTime(0.1f), //initialise attacktime
 
-treeState(*this, nullptr, "PARAMETERS", createParameterLayout()) 
+treeState(*this, nullptr, "PARAMETERS", createParameterLayout())
 #endif
 {
     //NormalisableRange<float> attackParam (0.1f, 5000.0f); //re-maps this to 0 and 1 (not defo true)
@@ -91,22 +91,18 @@ AudioProcessorValueTreeState::ParameterLayout JuceSynthFrameworkAudioProcessor::
     auto indexModFreqParam = std::make_unique<AudioParameterFloat>(INDEXMODFREQ_ID, INDEXMODFREQ_NAME, 0.0f, 10.0f, 1.0f);
     //for (int i = 1; i < 9; ++i)
     //{
-        // std::move actually moves the object, rather than making a copy then deleting it. More efficient:
+    // std::move actually moves the object, rather than making a copy then deleting it. More efficient:
     
     params.push_back (std::move(attackParam));
-    params.push_back (std::move(decayParam));
-    params.push_back (std::move(sustainParam));
+    
     params.push_back (std::move(releaseParam));
     params.push_back (std::move(harmDialParam));
     params.push_back (std::move(modIndexParam));
     params.push_back (std::move(oscSelectParam));
     params.push_back (std::move(indexModFreqParam));
+    params.push_back (std::move(decayParam));
+    params.push_back (std::move(sustainParam));
     
-    
-    
-    //params.push_back (std::move(choiceParam));
-    
-    //}
     
     return { params.begin(), params.end()};
     
@@ -124,29 +120,29 @@ const String JuceSynthFrameworkAudioProcessor::getName() const
 
 bool JuceSynthFrameworkAudioProcessor::acceptsMidi() const
 {
-   #if JucePlugin_WantsMidiInput
+#if JucePlugin_WantsMidiInput
     return true;
-   #else
+#else
     return false;
-   #endif
+#endif
 }
 
 bool JuceSynthFrameworkAudioProcessor::producesMidi() const
 {
-   #if JucePlugin_ProducesMidiOutput
+#if JucePlugin_ProducesMidiOutput
     return true;
-   #else
+#else
     return false;
-   #endif
+#endif
 }
 
 bool JuceSynthFrameworkAudioProcessor::isMidiEffect() const
 {
-   #if JucePlugin_IsMidiEffect
+#if JucePlugin_IsMidiEffect
     return true;
-   #else
+#else
     return false;
-   #endif
+#endif
 }
 
 double JuceSynthFrameworkAudioProcessor::getTailLengthSeconds() const
@@ -157,7 +153,7 @@ double JuceSynthFrameworkAudioProcessor::getTailLengthSeconds() const
 int JuceSynthFrameworkAudioProcessor::getNumPrograms()
 {
     return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
-                // so this should be at least 1, even if you're not really implementing programs.
+    // so this should be at least 1, even if you're not really implementing programs.
 }
 
 int JuceSynthFrameworkAudioProcessor::getCurrentProgram()
@@ -208,24 +204,24 @@ void JuceSynthFrameworkAudioProcessor::releaseResources()
 #ifndef JucePlugin_PreferredChannelConfigurations
 bool JuceSynthFrameworkAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
-  #if JucePlugin_IsMidiEffect
+#if JucePlugin_IsMidiEffect
     ignoreUnused (layouts);
     return true;
-  #else
+#else
     // This is the place where you check if the layout is supported.
     // In this template code we only support mono or stereo.
     if (layouts.getMainOutputChannelSet() != AudioChannelSet::mono()
-     && layouts.getMainOutputChannelSet() != AudioChannelSet::stereo())
+        && layouts.getMainOutputChannelSet() != AudioChannelSet::stereo())
         return false;
-
+    
     // This checks if the input layout matches the output layout
-   #if ! JucePlugin_IsSynth
+#if ! JucePlugin_IsSynth
     if (layouts.getMainOutputChannelSet() != layouts.getMainInputChannelSet())
         return false;
-   #endif
-
+#endif
+    
     return true;
-  #endif
+#endif
 }
 #endif
 
@@ -244,13 +240,13 @@ void JuceSynthFrameworkAudioProcessor::processBlock (AudioBuffer<float>& buffer,
                               treeState.getRawParameterValue (DECAY_ID),
                               treeState.getRawParameterValue (SUSTAIN_ID),
                               treeState.getRawParameterValue (RELEASE_ID));
-                              
+            
             myVoice->getFMParams(treeState.getRawParameterValue (HARMDIAL_ID), treeState.getRawParameterValue(MODINDEXDIAL_ID) );
             
             myVoice->getOscType (treeState.getRawParameterValue (OSCMENU_ID));
             
             myVoice->getIndexModAmpFreq (treeState.getRawParameterValue (INDEXMODFREQ_ID));
-                               
+            
             
             
         }
@@ -260,7 +256,7 @@ void JuceSynthFrameworkAudioProcessor::processBlock (AudioBuffer<float>& buffer,
     //ScopedNoDenormals noDenormals;
     //auto totalNumInputChannels  = getTotalNumInputChannels();
     //auto totalNumOutputChannels = getTotalNumOutputChannels();
-
+    
     // In case we have more outputs than inputs, this code clears any output
     // channels that didn't contain input data, (because these aren't
     // guaranteed to be empty - they may contain garbage).
@@ -268,9 +264,9 @@ void JuceSynthFrameworkAudioProcessor::processBlock (AudioBuffer<float>& buffer,
     // when they first compile a plugin, but obviously you don't need to keep
     // this code if your algorithm always overwrites all the output channels.
     
-//    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-//        buffer.clear (i, 0, buffer.getNumSamples());
-
+    //    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+    //        buffer.clear (i, 0, buffer.getNumSamples());
+    
     // This is the place where you'd normally do the guts of your plugin's
     // audio processing...
     // Make sure to reset the state if your inner loop is processing
@@ -278,17 +274,17 @@ void JuceSynthFrameworkAudioProcessor::processBlock (AudioBuffer<float>& buffer,
     // Alternatively, you can process the samples with the channels
     // interleaved by keeping the same state.
     
-//    for (int channel = 0; channel < totalNumInputChannels; ++channel)
-//    {
-//        auto* channelData = buffer.getWritePointer (channel);
-//
-//        // ..do something to the data...
-//    }
+    //    for (int channel = 0; channel < totalNumInputChannels; ++channel)
+    //    {
+    //        auto* channelData = buffer.getWritePointer (channel);
+    //
+    //        // ..do something to the data...
+    //    }
     
     //=============================================================
     // the above code is not necessary, since DSP is now happening in the render nextblock of mySnyth, so we call that instead:
     
-   
+    
     
     buffer.clear();
     
@@ -326,3 +322,4 @@ AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new JuceSynthFrameworkAudioProcessor();
 }
+
