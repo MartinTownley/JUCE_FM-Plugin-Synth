@@ -56,7 +56,20 @@ Envelope::~Envelope()
 
 void Envelope::paint (Graphics& g)
 {
-    g.fillAll(Colours::black);
+    g.fillAll(Colours::purple);
+    
+       // clear the background
+    
+    g.setColour (Colours::grey);
+    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
+    
+    g.setColour (Colours::white);
+    g.setFont (14.0f);
+    //g.drawText ("FMod", getLocalBounds(),
+    //Justification::centred, true);
+    g.drawText("Envelope", 10, 10, 200, 10, Justification::centred);
+    // draw some placeholder text
+    
 }
 
 void Envelope::resized()

@@ -29,17 +29,31 @@ public:
     
     void getADSR (float* ATTACK_ID, float* DECAY_ID, float* SUSTAIN_ID, float* RELEASE_ID)
     {
-        // get parameter from the slider and pass to the attack variable:
-        env1.setAttack(int(*ATTACK_ID)); //cast as a float since envelope attack takes a double. or could just have it as a double in the plugineditor H
+        // REPLACED MAXIMILIAN ENVELOPE WITH JUCE ADSR
         
-        env1.setDecay(int(*DECAY_ID));
+//        // get parameter from the slider and pass to the attack variable:
+//        env1.setAttack(int(*ATTACK_ID)); //cast as a float since envelope attack takes a double. or could just have it as a double in the plugineditor H
+//
+//        env1.setDecay(int(*DECAY_ID));
+//
+//        env1.setSustain(*SUSTAIN_ID); //sustain remains as a float
+//
+//        env1.setRelease(int(*RELEASE_ID));
         
-        env1.setSustain(*SUSTAIN_ID); //sustain remains as a float
-        
-        env1.setRelease(int(*RELEASE_ID));
+        adsrParams.attack = * ATTACK_ID; //cast to int
+        adsrParams.decay = * DECAY_ID;
+        adsrParams.sustain = * SUSTAIN_ID;
+        adsrParams.release = * RELEASE_ID;
         
         
     }
+    //==========================================
+    
+    void setADSRSampleRate (double sampleRate)
+    {
+        adsr.setSampleRate (sampleRate);
+    }
+    
     
     //==========================================
     void getFMParams (float* HARMDIAL_ID, float* MODINDEX_ID)
@@ -93,7 +107,9 @@ public:
     {
         // Velocity will be a value between 0 and 1, instantiated when you press a key:
         
-        env1.trigger = 1;
+        //env1.trigger = 1;
+        
+        adsr.noteOn();
         
         level = velocity;
         
@@ -117,8 +133,8 @@ public:
         // Allow tailOff boolean
         allowTailOff = true;
         
-        
-        env1.trigger = 0;
+        adsr.noteOff();
+        //env1.trigger = 0;
         
         if (velocity == 0)
         {clearCurrentNote();} // Unused voice can be allocated to next keypress
@@ -152,6 +168,9 @@ public:
         //env1.setDecay(5000);
         //env1.setSustain(0.1);
         
+        // Set adsr Parameters
+        
+        adsr.setParameters (adsrParams);
         
         
         mod1amp = 19;
@@ -174,7 +193,9 @@ public:
                                               + (modulator0.sinewave(mod0freq)
                                                  * (mod0amp * setOscType() )));
                                               
-            double theSound = (env1.adsr(theWave, env1.trigger) * level);
+           // double theSound = (env1.adsr(theWave, env1.trigger) * level);
+            
+            double theSound = adsr.getNextSample() * theWave;
             
             //double filteredSound = filter1.lores(theSound, 200, 0.1);
             
@@ -213,7 +234,13 @@ private:
     maxiOsc carrier, modulator0, modulator1;
     
     
-    
-    maxiEnv env1;
+    //Replacing maxiEnvelope with JUCE ADSR
+    //maxiEnv env1;
     //maxiFilter filter1;
+    
+    ADSR adsr;
+    ADSR::Parameters adsrParams;
+    
+    
+    
 };

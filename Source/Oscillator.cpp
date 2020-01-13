@@ -49,8 +49,10 @@ void Oscillator::paint (Graphics& g)
     
     g.setColour (Colours::white);
     g.setFont (14.0f);
-    g.drawText ("FMod", getLocalBounds(),
-                Justification::centred, true);   // draw some placeholder text
+    //g.drawText ("FMod", getLocalBounds(),
+                //Justification::centred, true);
+    g.drawText("FMod Amplitude LFO", 10, 10, 200, 10, Justification::centred);
+    // draw some placeholder text
 }
 
 void Oscillator::resized()
@@ -61,7 +63,7 @@ void Oscillator::resized()
     const int componentSize { 100 };
     
     // menu
-    oscMenu.setBounds(bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
+    oscMenu.setBounds(bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize/2));
     //dial
     indexAmpModFreqDial.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
     

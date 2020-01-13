@@ -61,14 +61,18 @@ AudioProcessorValueTreeState::ParameterLayout JuceSynthFrameworkAudioProcessor::
     //auto deduces return type for us:
     
     //ENVELOPE
+    //atack range: 0.1 seconds to 5 seconds
+    auto attackParam = std::make_unique<AudioParameterFloat> (ATTACK_ID, ATTACK_NAME, 0.1f, 5.0f, 0.1f);
     
-    auto attackParam = std::make_unique<AudioParameterInt> (ATTACK_ID, ATTACK_NAME, 10, 5000, 10);
     
-    auto decayParam = std::make_unique<AudioParameterInt>(DECAY_ID, DECAY_NAME, 10, 5000, 10);
+    //decay range: 0.1 seconds to 2 seconds
+    auto decayParam = std::make_unique<AudioParameterFloat>(DECAY_ID, DECAY_NAME, 0.0f, 2.0f, 0.1f);
     
-    auto sustainParam = std::make_unique<AudioParameterFloat>(SUSTAIN_ID, SUSTAIN_NAME, 0.0f, 1.0f, 1.0f);
+    //sustain range is 0.0 to 1
+    auto sustainParam = std::make_unique<AudioParameterFloat>(SUSTAIN_ID, SUSTAIN_NAME, 0.1f, 1.0f, 1.0f);
     
-    auto releaseParam = std::make_unique<AudioParameterInt> (RELEASE_ID, RELEASE_NAME, 10, 5000, 10);
+    //release range: 0.1 seconds to 5 seconds
+    auto releaseParam = std::make_unique<AudioParameterFloat> (RELEASE_ID, RELEASE_NAME, 0.1f, 5.0f, 2.0f);
     
     //===========
     //FREQ MOD
@@ -188,6 +192,9 @@ void JuceSynthFrameworkAudioProcessor::prepareToPlay (double sampleRate, int sam
     lastSampleRate = sampleRate;
     mySynth.setCurrentPlaybackSampleRate(lastSampleRate);
     
+    //don't do this:
+    //myVoice->setADSRSampleRate(lastSampleRate);
+    
     
     
 }
@@ -224,16 +231,15 @@ bool JuceSynthFrameworkAudioProcessor::isBusesLayoutSupported (const BusesLayout
 
 void JuceSynthFrameworkAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
-    
     // Iterate over the synth voices:
-    
-    
-    
     for (int i=0; i < mySynth.getNumVoices(); i++)
     {
         // If the voice is dynamically cast as a synth voice, relay the information:
-        if (myVoice = dynamic_cast<SynthVoice*>(mySynth.getVoice(i)))
+        if ((myVoice = dynamic_cast<SynthVoice*>(mySynth.getVoice(i))))
         {
+            
+            myVoice->setADSRSampleRate(lastSampleRate);
+            
             myVoice->getADSR (treeState.getRawParameterValue         (ATTACK_ID),
                               treeState.getRawParameterValue (DECAY_ID),
                               treeState.getRawParameterValue (SUSTAIN_ID),
