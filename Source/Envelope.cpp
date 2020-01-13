@@ -24,6 +24,23 @@ processor(p)
     addAndMakeVisible(&attackSlider);
     attackAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, ATTACK_ID, attackSlider);
     
+    //decay slider
+    decaySlider.setSliderStyle (Slider::SliderStyle::LinearVertical);
+    decaySlider.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
+    addAndMakeVisible(&decaySlider);
+    decayAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, DECAY_ID, decaySlider);
+    
+    
+    
+    //sustain slider
+    sustainSlider.setSliderStyle (Slider::SliderStyle::LinearVertical);
+    sustainSlider.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
+    addAndMakeVisible(&sustainSlider);
+    decayAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, SUSTAIN_ID, sustainSlider);
+    
+    
+    
+    
     //release slider
     releaseSlider.setSliderStyle (Slider::SliderStyle::LinearVertical);
     releaseSlider.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
@@ -47,10 +64,18 @@ void Envelope::resized()
     auto bounds = getLocalBounds();
     const int componentSize { 100 };
     
-    //attackSlider
+    //attackSlider set bounds
     attackSlider.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
     
-    //releaseSlider
+    //decay slider set bounds
+    decaySlider.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
+    
+    //sustain slider set bounds
+    sustainSlider.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
+    
+    
+    
+    //releaseSlider set bounds
     releaseSlider.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
 
 }

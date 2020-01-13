@@ -17,6 +17,12 @@
 #define ATTACK_ID "attack"
 #define ATTACK_NAME "Attack"
 
+#define DECAY_ID "decay"
+#define DECAY_NAME "Decay"
+
+#define SUSTAIN_ID "sustain"
+#define SUSTAIN_NAME "Sustain"
+
  #define RELEASE_ID "release"
 #define RELEASE_NAME "Release"
 

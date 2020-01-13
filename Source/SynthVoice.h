@@ -27,11 +27,18 @@ public:
     }
     //==========================================
     
-    void getADSR (float* ATTACK_ID, float* RELEASE_ID)
+    void getADSR (float* ATTACK_ID, float* DECAY_ID, float* SUSTAIN_ID, float* RELEASE_ID)
     {
         // get parameter from the slider and pass to the attack variable:
         env1.setAttack(int(*ATTACK_ID)); //cast as a float since envelope attack takes a double. or could just have it as a double in the plugineditor H
+        
+        env1.setDecay(int(*DECAY_ID));
+        
+        env1.setSustain(*SUSTAIN_ID); //sustain remains as a float
+        
         env1.setRelease(int(*RELEASE_ID));
+        
+        
     }
     
     //==========================================
@@ -142,8 +149,8 @@ public:
        
         // May not be best place to set these variables:
         //env1.setAttack(2000);
-        env1.setDecay(500);
-        env1.setSustain(0.8);
+        //env1.setDecay(5000);
+        //env1.setSustain(0.1);
         
         
         

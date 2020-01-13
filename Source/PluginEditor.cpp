@@ -99,6 +99,8 @@ void JuceSynthFrameworkAudioProcessorEditor::paint (Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
+    
+    //g.fillCheckerBoard
 
     g.setColour (Colours::white);
     g.setFont (15.0f);
@@ -109,6 +111,8 @@ void JuceSynthFrameworkAudioProcessorEditor::resized()
 {
     Rectangle<int> area = getLocalBounds();
     
+    
+    
     const int componentWidth = 200;
     const int componentHeight = 200;
     
@@ -118,23 +122,7 @@ void JuceSynthFrameworkAudioProcessorEditor::resized()
     // subcomponents in your editor..
    
     
-    
-    
-    
-    //choiceBox
-//    choiceBox.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
-    
-    
-    
-    
-    //modChoice.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize / 3));
-    
-    //Rectangle<int> area = getLocalBounds(); //this is the dimensions of the whole UI
-    
-    //const int componentWidth = 200;
-    //const int componentHeight = 200;
-    
-    envGUI.setBounds(area.removeFromLeft(componentWidth).removeFromTop(componentHeight));
+    envGUI.setBounds(area.removeFromLeft(componentWidth*2).removeFromTop(componentHeight));
     
     fmodGUI.setBounds(area.removeFromLeft(componentWidth).removeFromTop(componentHeight));
     

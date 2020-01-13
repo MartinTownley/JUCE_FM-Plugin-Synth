@@ -25,14 +25,31 @@ public:
     void resized() override;
 
 private:
+    //attackSlider & attachment
     Slider attackSlider;
-    Slider releaseSlider;
     
-    //attackAttach
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> attackAttach;
     
-    //releaseAttach
+    //decaySlider & attachment
+    Slider decaySlider;
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> decayAttach;
+    
+    
+    //sustainSlider & attachment
+    Slider sustainSlider;
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> sustainAttach;
+    
+    
+    //releaseSlider & attachment
+    Slider releaseSlider;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> releaseAttach;
+    
+    
+    
+    
+    
+    
+    
     
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.

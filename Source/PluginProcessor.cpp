@@ -59,14 +59,27 @@ AudioProcessorValueTreeState::ParameterLayout JuceSynthFrameworkAudioProcessor::
     
     //create variable that will go inside the treeState argument:
     //auto deduces return type for us:
+    
+    //ENVELOPE
+    
     auto attackParam = std::make_unique<AudioParameterInt> (ATTACK_ID, ATTACK_NAME, 10, 5000, 10);
     
+    auto decayParam = std::make_unique<AudioParameterInt>(DECAY_ID, DECAY_NAME, 10, 5000, 10);
+    
+    auto sustainParam = std::make_unique<AudioParameterFloat>(SUSTAIN_ID, SUSTAIN_NAME, 0.0f, 1.0f, 1.0f);
+    
     auto releaseParam = std::make_unique<AudioParameterInt> (RELEASE_ID, RELEASE_NAME, 10, 5000, 10);
+    
+    //===========
+    //FREQ MOD
     
     auto harmDialParam = std::make_unique<AudioParameterInt>(HARMDIAL_ID, HARMDIAL_NAME, 1, 128, 1);
     
     auto modIndexParam = std::make_unique<AudioParameterFloat>(MODINDEXDIAL_ID, MODINDEXDIAL_NAME, 1.0f, 200.0f, 1.0f);
     
+    
+    //==========
+    //LFO
     
     auto oscSelectParam = std::make_unique<AudioParameterChoice>(OSCMENU_ID, OSCMENU_NAME, StringArray ("OFFS", "SINE", "SQUARE", "SAW"), 1);
     
@@ -77,11 +90,14 @@ AudioProcessorValueTreeState::ParameterLayout JuceSynthFrameworkAudioProcessor::
         // std::move actually moves the object, rather than making a copy then deleting it. More efficient:
     
     params.push_back (std::move(attackParam));
+    params.push_back (std::move(decayParam));
+    params.push_back (std::move(sustainParam));
     params.push_back (std::move(releaseParam));
     params.push_back (std::move(harmDialParam));
     params.push_back (std::move(modIndexParam));
     params.push_back (std::move(oscSelectParam));
     params.push_back (std::move(indexModFreqParam));
+    
     
     
     //params.push_back (std::move(choiceParam));
@@ -218,7 +234,9 @@ void JuceSynthFrameworkAudioProcessor::processBlock (AudioBuffer<float>& buffer,
         // If the voice is dynamically cast as a synth voice, relay the information:
         if (myVoice = dynamic_cast<SynthVoice*>(mySynth.getVoice(i)))
         {
-            myVoice->getADSR (treeState.getRawParameterValue (ATTACK_ID),
+            myVoice->getADSR (treeState.getRawParameterValue         (ATTACK_ID),
+                              treeState.getRawParameterValue (DECAY_ID),
+                              treeState.getRawParameterValue (SUSTAIN_ID),
                               treeState.getRawParameterValue (RELEASE_ID));
                               
             myVoice->getFMParams(treeState.getRawParameterValue (HARMDIAL_ID), treeState.getRawParameterValue(MODINDEXDIAL_ID) );
