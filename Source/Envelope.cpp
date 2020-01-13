@@ -1,12 +1,10 @@
 /*
-  ==============================================================================
-
-    Envelope.cpp
-    Created: 7 Jan 2020 5:28:28pm
-    Author:  sierra
-
-  ==============================================================================
-*/
+ ==============================================================================
+ Envelope.cpp
+ Created: 7 Jan 2020 5:28:28pm
+ Author:  sierra
+ ==============================================================================
+ */
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Envelope.h"
@@ -23,10 +21,6 @@ processor(p)
     attackSlider.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
     addAndMakeVisible(&attackSlider);
     attackAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, ATTACK_ID, attackSlider);
-    // Labels
-    addAndMakeVisible(&attackLabel);
-    attackLabel.setText("Attack Time", dontSendNotification);
-    attackLabel.attachToComponent(&attackSlider, false);
     
     //decay slider
     decaySlider.setSliderStyle (Slider::SliderStyle::LinearVertical);
@@ -34,19 +28,12 @@ processor(p)
     addAndMakeVisible(&decaySlider);
     decayAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, DECAY_ID, decaySlider);
     
-    addAndMakeVisible(&decayLabel);
-    decayLabel.setText("Decay Time", dontSendNotification);
-    decayLabel.attachToComponent(&decaySlider, false);
-    
-    
     //sustain slider
     sustainSlider.setSliderStyle (Slider::SliderStyle::LinearVertical);
     sustainSlider.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
     addAndMakeVisible(&sustainSlider);
-    decayAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, SUSTAIN_ID, sustainSlider);
-    addAndMakeVisible(&sustainLabel);
-    sustainLabel.setText("Sustain Level", dontSendNotification);
-    sustainLabel.attachToComponent(&sustainSlider, false);
+    sustainAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, SUSTAIN_ID, sustainSlider);
+    
     
     //release slider
     releaseSlider.setSliderStyle (Slider::SliderStyle::LinearVertical);
@@ -54,10 +41,24 @@ processor(p)
     addAndMakeVisible(&releaseSlider);
     releaseAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, RELEASE_ID, releaseSlider);
     
+    //LABELS
+    addAndMakeVisible(&attackLabel);
+   attackLabel.setText("Attack Time", dontSendNotification);
+    attackLabel.attachToComponent(&attackSlider, false);
+    
+    addAndMakeVisible(&decayLabel);
+    decayLabel.setText("Decay Time", dontSendNotification);
+    decayLabel.attachToComponent(&decaySlider, false);
+    
+    addAndMakeVisible(&sustainLabel);
+    sustainLabel.setText("Sustain Level", dontSendNotification);
+    sustainLabel.attachToComponent(&sustainSlider, false);
+    
     addAndMakeVisible(&releaseLabel);
     releaseLabel.setText("Release Time", dontSendNotification);
     releaseLabel.attachToComponent(&releaseSlider, false);
-
+    
+    
 }
 
 Envelope::~Envelope()
@@ -66,9 +67,7 @@ Envelope::~Envelope()
 
 void Envelope::paint (Graphics& g)
 {
-    g.fillAll(Colours::purple);
-    
-    // clear the background
+    g.fillAll (Colours::purple);   // clear the background
     
     g.setColour (Colours::grey);
     g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
@@ -77,8 +76,10 @@ void Envelope::paint (Graphics& g)
     g.setFont (14.0f);
     //g.drawText ("FMod", getLocalBounds(),
     //Justification::centred, true);
-    g.drawText("ENVELOPE", 100, 175, 200, 10, Justification::centred);
+    g.drawText("ENVELOPE", 10, 175, 200, 10, Justification::centred);
     // draw some placeholder text
+    
+    
 }
 
 void Envelope::resized()
@@ -86,18 +87,21 @@ void Envelope::resized()
     auto bounds = getLocalBounds();
     const int componentSize { 100 };
     
-    //attackSlider set bounds
+    //attackSlider
     attackSlider.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
     
-    //decay slider set bounds
+    //decaySlider
     decaySlider.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
     
-    //sustain slider set bounds
+    //sustainSlider
     sustainSlider.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
     
     
     
-    //releaseSlider set bounds
+    
+    //releaseSlider
     releaseSlider.setBounds (bounds.removeFromLeft(100).withSizeKeepingCentre(componentSize, componentSize));
-
+    
+    
+    
 }

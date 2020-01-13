@@ -35,8 +35,8 @@ private:
     Slider decaySlider;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> decayAttach;
     Label decayLabel;
-    
-    
+//
+//
     //sustainSlider & attachment
     Slider sustainSlider;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> sustainAttach;
