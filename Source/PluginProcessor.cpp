@@ -66,7 +66,7 @@ AudioProcessorValueTreeState::ParameterLayout JuceSynthFrameworkAudioProcessor::
     
     
     //decay range: 0.1 seconds to 2 seconds
-    auto decayParam = std::make_unique<AudioParameterFloat>(DECAY_ID, DECAY_NAME, 0.0f, 2.0f, 0.1f);
+    auto decayParam = std::make_unique<AudioParameterFloat>(DECAY_ID, DECAY_NAME, 0.1f, 2.0f, 0.1f);
     
     //sustain range is 0.0 to 1
     auto sustainParam = std::make_unique<AudioParameterFloat>(SUSTAIN_ID, SUSTAIN_NAME, 0.1f, 1.0f, 1.0f);
