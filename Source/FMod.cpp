@@ -22,13 +22,13 @@ processor(p)
     harmDial.setSliderStyle (Slider::SliderStyle::RotaryVerticalDrag);
     harmDial.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
     addAndMakeVisible(&harmDial);
-    harmDialAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, HARMDIAL_ID, harmDial);
+    harmDialAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.getAPVTS(), HARMDIAL_ID, harmDial);
     
     //modIndexDial slider
     modIndexDial.setSliderStyle (Slider::SliderStyle::RotaryVerticalDrag);
     modIndexDial.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
     addAndMakeVisible(&modIndexDial);
-    modIndexDialAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, MODINDEXDIAL_ID, modIndexDial);
+    modIndexDialAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.getAPVTS(), MODINDEXDIAL_ID, modIndexDial);
     
     //LABELS
     

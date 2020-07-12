@@ -27,21 +27,12 @@ public:
     }
     //==========================================
     
-    void getADSR (float* ATTACK_ID, float* DECAY_ID, float* SUSTAIN_ID, float* RELEASE_ID)
+    void setADSR (float ATTACK_ID, float DECAY_ID, float SUSTAIN_ID, float RELEASE_ID)
     {
-        // REPLACED MAXIMILIAN ENVELOPE WITH JUCE ADSR
-        
-//        // get parameter from the slider and pass to the attack variable:
-//        env1.setAttack(int(*ATTACK_ID)); //cast as a float since envelope attack takes a double. or could just have it as a double in the plugineditor H
-//
-//        
-        
-        adsrParams.attack = * ATTACK_ID;
-        adsrParams.decay = * DECAY_ID;
-        adsrParams.sustain = * SUSTAIN_ID;
-        adsrParams.release = * RELEASE_ID;
-        
-        
+        adsrParams.attack =  ATTACK_ID;
+        adsrParams.decay =  DECAY_ID;
+        adsrParams.sustain =  SUSTAIN_ID;
+        adsrParams.release = RELEASE_ID;
     }
     //==========================================
     
@@ -52,27 +43,28 @@ public:
     
     
     //==========================================
-    void getFMParams (float* HARMDIAL_ID, float* MODINDEX_ID)
+    void setFMParams (float HARMDIAL_ID, float MODINDEX_ID)
     {
         // Harmonicity Radio
-        harmRatio = (int(*HARMDIAL_ID));
-        
+        harmRatio = (int(HARMDIAL_ID));
+
         // Modulation Index
-        modIndex = (double(*MODINDEX_ID));
+        modIndex =  MODINDEX_ID;
+        
     }
     
     //==========================================
     
-    void getOscType (float* selection)
+    void setOscType (float selection)
     {
 //        std::cout << *selection << std::endl;
-        modulator1Type = (int(*selection));
+        modulator1Type = (int(selection));
     }
     //==========================================
     
-    void getIndexModAmpFreq (float* INDEXMODFREQ_ID)
+    void setIndexModAmpFreq (float INDEXMODFREQ_ID)
     {
-        mod1freq = (int(* INDEXMODFREQ_ID));
+        mod1freq = (int( INDEXMODFREQ_ID));
     }
     //==========================================
     double setOscType ()
@@ -162,10 +154,6 @@ public:
         
         // Set arguments for envelope:
       
-        
-        
-        
-        
         mod1amp = 19;
         //mod1freq = 2;
         adsr.setParameters (adsrParams);
@@ -191,8 +179,6 @@ public:
             // Iterate the channels
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
             {
-                
-                
                 outputBuffer.addSample(channel, startSample, (theSound * 0.2)); //args: (destChannel, destSample, valueToAdd)
             }
             // Advance startSample after channel iterator:
@@ -203,6 +189,8 @@ public:
     }
     
     //==========================================
+    //ADSR Getter:
+    ADSR::Parameters& getADSRParams() { return adsrParams; }
     
 private:
     

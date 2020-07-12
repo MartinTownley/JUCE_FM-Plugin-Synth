@@ -18,28 +18,39 @@ processor(p)
     
     //attack slider
     attackSlider.setSliderStyle (Slider::SliderStyle::LinearVertical);
-    attackSlider.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
+    attackSlider.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow,
+                                  true,
+                                  50,
+                                  15);
     addAndMakeVisible(&attackSlider);
-    attackAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, ATTACK_ID, attackSlider);
+    attackAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.getAPVTS(), //state to control
+                                                                                      ATTACK_ID, //parameterID
+                                                                                      attackSlider); //slider to control
     
     //decay slider
     decaySlider.setSliderStyle (Slider::SliderStyle::LinearVertical);
     decaySlider.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
     addAndMakeVisible(&decaySlider);
-    decayAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, DECAY_ID, decaySlider);
+    decayAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.getAPVTS(),
+                                                                                     DECAY_ID,
+                                                                                     decaySlider);
     
     //sustain slider
     sustainSlider.setSliderStyle (Slider::SliderStyle::LinearVertical);
     sustainSlider.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
     addAndMakeVisible(&sustainSlider);
-    sustainAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, SUSTAIN_ID, sustainSlider);
+    sustainAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.getAPVTS(),
+                                                                                       SUSTAIN_ID,
+                                                                                       sustainSlider);
     
     
     //release slider
     releaseSlider.setSliderStyle (Slider::SliderStyle::LinearVertical);
     releaseSlider.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
     addAndMakeVisible(&releaseSlider);
-    releaseAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.treeState, RELEASE_ID, releaseSlider);
+    releaseAttach = std::make_unique <AudioProcessorValueTreeState::SliderAttachment> (processor.getAPVTS(),
+                                                                                       RELEASE_ID,
+                                                                                       releaseSlider);
     
     //LABELS
     addAndMakeVisible(&attackLabel);

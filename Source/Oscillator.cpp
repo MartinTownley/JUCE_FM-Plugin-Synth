@@ -26,14 +26,16 @@ processor(p)
     addAndMakeVisible(&oscMenu);
     oscMenu.addListener(this);
     
-    oscMenuAttach = std::make_unique <AudioProcessorValueTreeState::ComboBoxAttachment>(processor.treeState, OSCMENU_ID, oscMenu);
+    oscMenuAttach = std::make_unique <AudioProcessorValueTreeState::ComboBoxAttachment>(processor.getAPVTS(), OSCMENU_ID, oscMenu);
     
     // FREQUENCY DIAL
     indexAmpModFreqDial.setSliderStyle (Slider::SliderStyle::RotaryVerticalDrag);
-    indexAmpModFreqDial.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 15);
+    indexAmpModFreqDial.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, false, 50, 15);
+    
+    
     addAndMakeVisible(&indexAmpModFreqDial);
     // ATTACH DIAL
-    indexAmpModFreqAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, INDEXMODFREQ_ID, indexAmpModFreqDial );
+    indexAmpModFreqAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.getAPVTS(), INDEXMODFREQ_ID, indexAmpModFreqDial );
     
     
     //LABELS

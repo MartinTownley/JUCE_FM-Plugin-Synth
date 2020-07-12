@@ -24,7 +24,7 @@ JuceSynthFrameworkAudioProcessor::JuceSynthFrameworkAudioProcessor()
                   ),
 //attackTime(0.1f), //initialise attacktime
 
-treeState(*this, nullptr, "PARAMETERS", createParameterLayout())
+mAPVTS(*this, nullptr, "PARAMETERS", createParameterLayout())
 #endif
 {
     //NormalisableRange<float> attackParam (0.1f, 5000.0f); //re-maps this to 0 and 1 (not defo true)
@@ -51,44 +51,85 @@ JuceSynthFrameworkAudioProcessor::~JuceSynthFrameworkAudioProcessor()
 //==============================================================================
 AudioProcessorValueTreeState::ParameterLayout JuceSynthFrameworkAudioProcessor:: createParameterLayout()
 {
-    //Create parameterlayout gets used as an argument for treeState at the top of this file (scroll up)
+    //Create parameterlayout gets used as an argument for mAPVTS at the top of this file (scroll up)
     
     
     // Making a vector of audioParameter unique pointers:
     std::vector <std::unique_ptr <RangedAudioParameter> > params;
     
-    //create variable that will go inside the treeState argument:
+    //create variable that will go inside the mAPVTS argument:
     //auto deduces return type for us:
     
     //ENVELOPE
     //atack range: 0.1 seconds to 5 seconds
-    auto attackParam = std::make_unique<AudioParameterFloat> (ATTACK_ID, ATTACK_NAME, 0.1f, 5.0f, 0.1f);
+    auto attackParam = std::make_unique<AudioParameterFloat> (ATTACK_ID,
+                                                              ATTACK_NAME,
+                                                              0.1f,
+                                                              5.0f,
+                                                              0.1f);
+    //someParam = attackParam.get();
+    
     
     
     //decay range: 0.1 seconds to 2 seconds
-    auto decayParam = std::make_unique<AudioParameterFloat>(DECAY_ID, DECAY_NAME, 0.1f, 2.0f, 0.1f);
+    auto decayParam = std::make_unique<AudioParameterFloat>(DECAY_ID,
+                                                            DECAY_NAME,
+                                                            0.1f,
+                                                            2.0f,
+                                                            0.1f);
     
     //sustain range is 0.0 to 1
-    auto sustainParam = std::make_unique<AudioParameterFloat>(SUSTAIN_ID, SUSTAIN_NAME, 0.1f, 1.0f, 1.0f);
+    auto sustainParam = std::make_unique<AudioParameterFloat>(SUSTAIN_ID,
+                                                              SUSTAIN_NAME,
+                                                              0.1f,
+                                                              1.0f,
+                                                              1.0f);
     
     //release range: 0.1 seconds to 5 seconds
-    auto releaseParam = std::make_unique<AudioParameterFloat> (RELEASE_ID, RELEASE_NAME, 0.1f, 5.0f, 2.0f);
+    auto releaseParam = std::make_unique<AudioParameterFloat> (RELEASE_ID,
+                                                               RELEASE_NAME,
+                                                               0.1f,
+                                                               5.0f,
+                                                               2.0f);
     
     //===========
     //FREQ MOD
     
-    auto harmDialParam = std::make_unique<AudioParameterInt>(HARMDIAL_ID, HARMDIAL_NAME, 1, 128, 1);
+    auto harmDialParam = std::make_unique<AudioParameterInt>(HARMDIAL_ID,
+                                                             HARMDIAL_NAME,
+                                                             1,
+                                                             128,
+                                                             1);
     
-    auto modIndexParam = std::make_unique<AudioParameterFloat>(MODINDEXDIAL_ID, MODINDEXDIAL_NAME, 1.0f, 200.0f, 1.0f);
+    
+    
+    auto modIndexParam = std::make_unique<AudioParameterFloat>(MODINDEXDIAL_ID,
+                                                               MODINDEXDIAL_NAME,
+                                                               1.0f,
+                                                               200.0f,
+                                                               1.0f);
+    
+    
+    //someModIndex = modIndexParam.get();
     
     
     //==========
     //LFO
     
-    auto oscSelectParam = std::make_unique<AudioParameterChoice>(OSCMENU_ID, OSCMENU_NAME, StringArray ("OFFS", "SINE", "SQUARE", "SAW"), 1);
+    auto oscSelectParam = std::make_unique<AudioParameterChoice>(OSCMENU_ID,
+                                                                 OSCMENU_NAME,
+                                                                 StringArray ("OFFS",
+                                                                              "SINE",
+                                                                              "SQUARE",
+                                                                              "SAW"),
+                                                                                1);
     
     
-    auto indexModFreqParam = std::make_unique<AudioParameterFloat>(INDEXMODFREQ_ID, INDEXMODFREQ_NAME, 0.0f, 10.0f, 1.0f);
+    auto indexModFreqParam = std::make_unique<AudioParameterFloat>(INDEXMODFREQ_ID,
+                                                                   INDEXMODFREQ_NAME,
+                                                                   0.0f,
+                                                                   10.0f,
+                                                                   1.0f);
     //for (int i = 1; i < 9; ++i)
     //{
     // std::move actually moves the object, rather than making a copy then deleting it. More efficient:
@@ -227,6 +268,11 @@ bool JuceSynthFrameworkAudioProcessor::isBusesLayoutSupported (const BusesLayout
 
 void JuceSynthFrameworkAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
+    
+    
+    
+    
+    
     // Iterate over the synth voices:
     for (int i=0; i < mySynth.getNumVoices(); i++)
     {
@@ -236,23 +282,24 @@ void JuceSynthFrameworkAudioProcessor::processBlock (AudioBuffer<float>& buffer,
             
             myVoice->setADSRSampleRate(lastSampleRate);
             
-            myVoice->getADSR (treeState.getRawParameterValue         (ATTACK_ID),
-                              treeState.getRawParameterValue (DECAY_ID),
-                              treeState.getRawParameterValue (SUSTAIN_ID),
-                              treeState.getRawParameterValue (RELEASE_ID));
             
-            myVoice->getFMParams(treeState.getRawParameterValue (HARMDIAL_ID), treeState.getRawParameterValue(MODINDEXDIAL_ID) );
+            myVoice-> setADSR (mAPVTS.getRawParameterValue (ATTACK_ID)->load(),
+                               mAPVTS.getRawParameterValue (DECAY_ID)->load(),
+                               mAPVTS.getRawParameterValue (SUSTAIN_ID)->load(),
+                               mAPVTS.getRawParameterValue (RELEASE_ID)->load() );
             
-            myVoice->getOscType (treeState.getRawParameterValue (OSCMENU_ID));
+            myVoice-> setFMParams(mAPVTS.getRawParameterValue (HARMDIAL_ID)-> load(),
+                                  mAPVTS.getRawParameterValue(MODINDEXDIAL_ID)->load());
+
+            myVoice-> setOscType(mAPVTS.getRawParameterValue(OSCMENU_ID)-> load());
             
-            myVoice->getIndexModAmpFreq (treeState.getRawParameterValue (INDEXMODFREQ_ID));
-            
+            myVoice-> setIndexModAmpFreq(mAPVTS.getRawParameterValue(INDEXMODFREQ_ID)-> load());
             
             
         }
     }
     
-    //std::cout << treeState.getRawParameterValue(ONOFF_ID);
+    //std::cout << mAPVTS.getRawParameterValue(ONOFF_ID);
     //ScopedNoDenormals noDenormals;
     //auto totalNumInputChannels  = getTotalNumInputChannels();
     //auto totalNumOutputChannels = getTotalNumOutputChannels();

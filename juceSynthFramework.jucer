@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="Ktr7cH" name="AAP_Project_33537140" projectType="audioplug"
-              jucerVersion="5.4.5" pluginCharacteristicsValue="pluginIsSynth,pluginProducesMidiOut,pluginWantsMidiIn">
+              jucerVersion="5.4.7" pluginCharacteristicsValue="pluginIsSynth,pluginProducesMidiOut,pluginWantsMidiIn">
   <MAINGROUP id="ZfdPV4" name="AAP_Project_33537140">
     <GROUP id="{6C3CB3E8-E63B-BC92-7710-DD30C7C21421}" name="Source">
       <GROUP id="{D4C7D391-4317-7616-5A07-764E0A4B98ED}" name="Maximilian">

@@ -30,10 +30,6 @@ public:
     void paint (Graphics&) override;
     void resized() override;
     
-    
-    
-    
-
 private:
     
     // oscillator class instance:
@@ -42,11 +38,6 @@ private:
     FMod fmodGUI;
 
     Envelope envGUI;
-    
-    
-    
-    
-    
     
     //ComboBox modChoice;
     

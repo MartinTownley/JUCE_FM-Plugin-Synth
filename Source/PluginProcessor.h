@@ -90,12 +90,14 @@ public:
     //float attackTime;
     //float releaseTime;
     
-    
-    AudioProcessorValueTreeState treeState;
+    // Getter for access to APVTS:
+    AudioProcessorValueTreeState& getAPVTS() {return mAPVTS;};
     
     // Tutorial 44- 21:52
     // Create a parameter method
-    AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
+    
+    
+    
     
 
 private:
@@ -104,6 +106,9 @@ private:
     
     double lastSampleRate;
     
+    
+    AudioProcessorValueTreeState mAPVTS;
+    AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     
     
     //==============================================================================
