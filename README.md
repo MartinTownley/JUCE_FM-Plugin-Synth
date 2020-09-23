@@ -1,3 +1,9 @@
-# AAP_Project_Jan2020
+# JUCE Frequency Modulation Plug-In Synthesiser
 
-Instructions: Launch projucer file
+![FMSynthScreenshot ](/images/juce_fm_synth.png)
+
+An FM synthesiser plug-in, developed in C++ with JUCE, with ADSR envelope and LFO parameters.
+
+## Instructions
+
+Once the repository is cloned, simply launch the projucer file to edit / run the code in your IDE.
