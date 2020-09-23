@@ -1,6 +1,6 @@
 # JUCE Frequency Modulation Plug-In Synthesiser
 
-![FMSynthScreenshot ](/images/juce_fm_synth.png)
+![FMSynthScreenshot ](/images/img_juce_fm_synth.png)
 
 An FM synthesiser plug-in, developed in C++ with JUCE, with ADSR envelope and LFO parameters.
 
